@@ -82,7 +82,7 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px] bg-white">
+      <DialogContent className="sm:max-w-[440px] max-h-[90vh] overflow-y-auto bg-white">
         <AnimatePresence mode="wait">
           {!submitted ? (
             <motion.div
@@ -93,20 +93,20 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
               transition={{ duration: 0.3 }}
             >
               <DialogHeader>
-                <DialogTitle className="text-2xl font-semibold tracking-tight">
+                <DialogTitle className="text-xl font-semibold tracking-tight">
                   Request Demo Access
                 </DialogTitle>
-                <DialogDescription className="text-base text-neutral-600 leading-relaxed">
+                <DialogDescription className="text-sm text-neutral-600 leading-relaxed">
                   Fill out the form below and you'll get immediate access to the POD system demo.
                 </DialogDescription>
               </DialogHeader>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-3">
                 {error && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm"
+                    className="p-2.5 bg-red-50 border border-red-200 rounded text-red-700 text-xs"
                   >
                     {error}
                   </motion.div>
@@ -117,18 +117,18 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
-                  <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="name" className="block text-xs font-medium text-neutral-700 mb-1.5">
                     Full Name *
                   </label>
                   <input
                     id="name"
                     type="text"
                     {...register('name', { required: 'Name is required' })}
-                    className="w-full px-4 py-3 border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
                     placeholder="John Smith"
                   />
                   {errors.name && (
-                    <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
+                    <p className="text-red-600 text-xs mt-1">{errors.name.message}</p>
                   )}
                 </motion.div>
 
@@ -137,7 +137,7 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.15 }}
                 >
-                  <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="email" className="block text-xs font-medium text-neutral-700 mb-1.5">
                     Email Address *
                   </label>
                   <input
@@ -150,11 +150,11 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                         message: 'Invalid email address'
                       }
                     })}
-                    className="w-full px-4 py-3 border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
                     placeholder="john@company.com"
                   />
                   {errors.email && (
-                    <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+                    <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>
                   )}
                 </motion.div>
 
@@ -163,14 +163,14 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.2 }}
                 >
-                  <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="company" className="block text-xs font-medium text-neutral-700 mb-1.5">
                     Company / Business
                   </label>
                   <input
                     id="company"
                     type="text"
                     {...register('company')}
-                    className="w-full px-4 py-3 border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors"
                     placeholder="Your Company Name"
                   />
                 </motion.div>
@@ -180,20 +180,20 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.25 }}
                 >
-                  <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="message" className="block text-xs font-medium text-neutral-700 mb-1.5">
                     What are you looking to build?
                   </label>
                   <textarea
                     id="message"
                     {...register('message')}
-                    rows={3}
-                    className="w-full px-4 py-3 border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors resize-none"
+                    rows={2}
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors resize-none"
                     placeholder="Tell us about your project or needs..."
                   />
                 </motion.div>
 
                 <motion.div 
-                  className="flex gap-3 pt-2"
+                  className="flex gap-2 pt-1"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.3 }}
@@ -201,19 +201,19 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 px-6 py-3 bg-blue-600 text-white text-base font-medium hover:bg-blue-700 transition-all hover:shadow-lg inline-flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all hover:shadow-lg inline-flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                         Submitting...
                       </>
                     ) : (
                       <>
                         Get Demo Access
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </motion.button>
@@ -221,7 +221,7 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                     type="button"
                     onClick={handleClose}
                     disabled={isSubmitting}
-                    className="px-6 py-3 border-2 border-neutral-300 text-base font-medium hover:border-neutral-400 hover:bg-neutral-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 border-2 border-neutral-300 text-sm font-medium hover:border-neutral-400 hover:bg-neutral-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -231,22 +231,22 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
           ) : (
             <motion.div 
               key="success"
-              className="py-8 text-center"
+              className="py-6 text-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
             >
               <motion.div 
-                className="flex justify-center mb-4"
+                className="flex justify-center mb-3"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
               >
-                <CheckCircle2 className="w-16 h-16 text-green-600" />
+                <CheckCircle2 className="w-12 h-12 text-green-600" />
               </motion.div>
               <motion.h3 
-                className="text-2xl font-semibold mb-3 tracking-tight"
+                className="text-xl font-semibold mb-2 tracking-tight"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
@@ -254,7 +254,7 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                 Request Received!
               </motion.h3>
               <motion.p 
-                className="text-base text-neutral-600 mb-4 leading-relaxed"
+                className="text-sm text-neutral-600 mb-3 leading-relaxed"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.3 }}
@@ -267,7 +267,7 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.4 }}
               >
-                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                <div className="w-6 h-6 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
               </motion.div>
             </motion.div>
           )}
