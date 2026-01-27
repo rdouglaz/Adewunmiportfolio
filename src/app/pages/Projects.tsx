@@ -1,28 +1,13 @@
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
-import { motion } from 'motion/react';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/app/components/ui/carousel"
-import { 
   BeamButton, 
   ScrollFadeIn, 
   StaggerContainer, 
   StaggerItem,
   DecorativeCircle 
 } from '@/app/components/animations';
-
-// POD System Screenshots
-import podOverview from 'figma:asset/53116b53e241783a05034f48bb8a7135caea9c81.png';
-import podPortfolio from 'figma:asset/512d107fefb7536d15a12389ca5753bfb8b592fe.png';
-import podTenants from 'figma:asset/c776012da308ccdaaf238c8206e5bfab54b74653.png';
-import podReports from 'figma:asset/e250188935cf573c85d10c76c68dd9ce30e7becb.png';
-import podExpenses from 'figma:asset/11b1ad1eb91ba65540710f729236d29be60bca19.png';
 
 export function Projects() {
   const [showAccessModal, setShowAccessModal] = useState(false);
@@ -43,21 +28,14 @@ export function Projects() {
       techStack: ['No-code platforms', 'AI automation', 'API integrations', 'Database design'],
       demo: 'https://demo.podsystem.ng',
       status: 'Live',
-      tag: 'Property Management SaaS',
-      images: [
-        { src: podOverview, alt: "Dashboard Overview" },
-        { src: podPortfolio, alt: "Properties Portfolio" },
-        { src: podTenants, alt: "Tenant Registry" },
-        { src: podReports, alt: "Reports & Analytics" },
-        { src: podExpenses, alt: "Expense Analytics" }
-      ]
+      tag: 'Property Management SaaS'
     }
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-8 py-20 relative">
       {/* Decorative elements */}
-      <div className="absolute top-10 right-10 opacity-20">
+      <div className="absolute top-10 right-10 opacity-20 pointer-events-none">
         <DecorativeCircle size={80} withPulse />
       </div>
       
@@ -75,85 +53,57 @@ export function Projects() {
           <ScrollFadeIn key={index} delay={0.2}>
             <article className="bg-white border border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
               <div className="p-10">
-                <div className="flex items-start justify-between mb-6">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 gap-4">
                   <div>
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold tracking-wide">
+                      <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold tracking-wide rounded-full">
                         {project.status}
                       </span>
-                      <span className="text-sm text-neutral-500">{project.tag}</span>
+                      <span className="text-sm text-neutral-500 font-medium">{project.tag}</span>
                     </div>
-                    <h2 className="text-3xl font-semibold tracking-tight">{project.title}</h2>
+                    <h2 className="text-3xl font-semibold tracking-tight text-neutral-900">{project.title}</h2>
                   </div>
+                  <BeamButton
+                    onClick={() => setShowAccessModal(true)}
+                    variant="primary"
+                    className="shrink-0"
+                  >
+                    View Live Demo
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </BeamButton>
                 </div>
 
-                {/* Demo Video */}
-                <ScrollFadeIn delay={0.1}>
-                  <div className="mb-10">
-                    <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative">
-                      <iframe
-                        src="https://www.youtube.com/embed/kE6DWpnOkUE"
-                        title="POD System Demo Video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="absolute inset-0 w-full h-full"
-                      />
-                    </div>
-                    <p className="text-sm text-neutral-600 mt-3 text-center">Watch the full system walkthrough</p>
-                  </div>
-                </ScrollFadeIn>
+                <div className="grid lg:grid-cols-12 gap-10 mb-10">
+                   {/* Main Content Column */}
+                   <div className="lg:col-span-7 space-y-8">
+                      {/* Description */}
+                      <p className="text-lg text-neutral-600 leading-relaxed">
+                        {project.description}
+                      </p>
 
-                <ScrollFadeIn delay={0.2}>
-                  <div className="mb-10">
-                    <Carousel className="w-full">
-                      <CarouselContent>
-                        {project.images.map((img, idx) => (
-                          <CarouselItem key={idx}>
-                            <div className="border border-neutral-200 shadow-sm overflow-hidden aspect-[16/9] bg-neutral-100 relative group">
-                                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
-                                 <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {img.alt}
-                                 </div>
-                            </div>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                      <CarouselPrevious className="left-4" />
-                      <CarouselNext className="right-4" />
-                    </Carousel>
-                  </div>
-                </ScrollFadeIn>
+                      {/* Demo Video */}
+                      <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative rounded-lg">
+                        <iframe
+                          src="https://www.youtube.com/embed/kE6DWpnOkUE"
+                          title="POD System Demo Video"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full"
+                        />
+                      </div>
+                      <p className="text-sm text-neutral-500 italic text-center">Watch the full system walkthrough</p>
+                   </div>
 
-                <p className="text-lg text-neutral-600 mb-10 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="grid lg:grid-cols-2 gap-10 mb-10">
-                  <ScrollFadeIn direction="left" delay={0.3}>
-                    <div className="bg-neutral-50 border border-neutral-200 p-8">
-                      <h3 className="text-xl font-semibold mb-6">Key Features</h3>
-                      <StaggerContainer className="space-y-3">
-                        {project.features.map((feature, fIndex) => (
-                          <StaggerItem key={fIndex}>
-                            <div className="flex items-start gap-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-2 flex-shrink-0" />
-                              <span className="text-base text-neutral-700 leading-relaxed">{feature}</span>
-                            </div>
-                          </StaggerItem>
-                        ))}
-                      </StaggerContainer>
-                    </div>
-                  </ScrollFadeIn>
-
-                  <ScrollFadeIn direction="right" delay={0.3}>
-                    <div>
-                      <div className="mb-8">
-                        <h3 className="text-xl font-semibold mb-4">Tech Approach</h3>
+                   {/* Sidebar Column */}
+                   <div className="lg:col-span-5 space-y-8">
+                      {/* Tech Stack */}
+                      <div className="bg-neutral-50 border border-neutral-100 p-6 rounded-lg">
+                        <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-4">Tech Stack</h3>
                         <div className="flex flex-wrap gap-2">
                           {project.techStack.map((tech, tIndex) => (
                             <span 
                               key={tIndex} 
-                              className="px-4 py-2 bg-white border border-neutral-300 text-neutral-700 text-sm font-medium"
+                              className="px-3 py-1.5 bg-white border border-neutral-200 text-neutral-700 text-sm font-medium rounded shadow-sm"
                             >
                               {tech}
                             </span>
@@ -161,34 +111,42 @@ export function Projects() {
                         </div>
                       </div>
 
-                      <div className="bg-blue-50 border border-blue-100 p-6">
-                        <p className="text-sm text-blue-900 mb-4 font-medium">
+                      {/* Key Features */}
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+                        <StaggerContainer className="space-y-3">
+                          {project.features.map((feature, fIndex) => (
+                            <StaggerItem key={fIndex}>
+                              <div className="flex items-start gap-3 group">
+                                <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                                <span className="text-base text-neutral-700 leading-relaxed">{feature}</span>
+                              </div>
+                            </StaggerItem>
+                          ))}
+                        </StaggerContainer>
+                      </div>
+
+                      {/* CTA Box */}
+                      <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg">
+                        <p className="text-sm text-blue-900 mb-4 font-medium leading-relaxed">
                           Built for real property management workflows with role-based access and multi-tenant architecture.
                         </p>
                         <button
                           onClick={() => setShowAccessModal(true)}
-                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-base group"
+                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group"
                         >
                           Explore the live system
                           <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </button>
                       </div>
-                    </div>
-                  </ScrollFadeIn>
+                   </div>
                 </div>
 
-                <div className="flex gap-4 pt-6 border-t border-neutral-200">
-                  <BeamButton
-                    onClick={() => setShowAccessModal(true)}
-                    variant="primary"
-                  >
-                    View Live Demo
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </BeamButton>
+                <div className="flex justify-end pt-6 border-t border-neutral-100">
                   <BeamButton
                     href="mailto:Adewunmi@podsystem.ng?subject=POD System Inquiry"
                     variant="outline"
-                    className="border-2 border-neutral-300 text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50"
+                    className="border-neutral-200 text-neutral-600 hover:text-neutral-900"
                   >
                     Inquire About POD
                   </BeamButton>
@@ -201,7 +159,7 @@ export function Projects() {
 
       {/* More Projects Coming */}
       <ScrollFadeIn delay={0.4}>
-        <div className="mt-20 bg-neutral-50 border border-neutral-200 p-12 text-center">
+        <div className="mt-20 bg-neutral-50 border border-neutral-200 p-12 text-center rounded-xl">
           <h3 className="text-2xl font-semibold mb-4 tracking-tight">More Projects Coming Soon</h3>
           <p className="text-base text-neutral-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             I'm continuously building and refining internal systems. Check back for updates or reach out to discuss your project.
