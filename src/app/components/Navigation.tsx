@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
+import { BeamButton } from '@/app/components/animations';
 
 export function Navigation() {
   const location = useLocation();
@@ -48,14 +49,13 @@ export function Navigation() {
             >
               Contact
             </Link>
-            <a
+            <BeamButton 
               href="https://demo.podsystem.ng"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 bg-blue-600 text-white text-base font-medium hover:bg-blue-700 transition-all hover:shadow-md"
+              variant="primary"
+              className="!px-5 !py-2.5 text-sm"
             >
               Live Demo
-            </a>
+            </BeamButton>
           </div>
         </div>
       </div>
