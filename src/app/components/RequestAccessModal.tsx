@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from '@/app/components/ui/dialog';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { projectId, publicAnonKey } from '/utils/supabase/info';
 
 interface RequestAccessModalProps {
   open: boolean;
@@ -24,26 +25,53 @@ interface FormData {
 
 export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    // In a real implementation, you would send this to your backend/CRM
-    console.log('Form submitted:', data);
+    setIsSubmitting(true);
+    setError(null);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Show success state
-    setSubmitted(true);
-    
-    // Reset after showing success message
-    setTimeout(() => {
-      setSubmitted(false);
-      reset();
-      onOpenChange(false);
-      // Redirect to demo
-      window.open('https://demo.podsystem.ng', '_blank');
-    }, 2000);
+    try {
+      // Send data to the backend
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/make-server-1bf47000/demo-request`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${publicAnonKey}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit request');
+      }
+
+      console.log('Demo request submitted successfully:', result);
+      
+      // Show success state
+      setSubmitted(true);
+      
+      // Reset after showing success message
+      setTimeout(() => {
+        setSubmitted(false);
+        reset();
+        onOpenChange(false);
+        // Redirect to demo
+        window.open('https://demo.podsystem.ng', '_blank');
+      }, 2000);
+    } catch (err) {
+      console.error('Error submitting demo request:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -74,6 +102,16 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
               </DialogHeader>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-4">
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm"
+                  >
+                    {error}
+                  </motion.div>
+                )}
+
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -162,17 +200,28 @@ export function RequestAccessModal({ open, onOpenChange }: RequestAccessModalPro
                 >
                   <motion.button
                     type="submit"
-                    className="flex-1 px-6 py-3 bg-blue-600 text-white text-base font-medium hover:bg-blue-700 transition-all hover:shadow-lg inline-flex items-center justify-center gap-2 group"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmitting}
+                    className="flex-1 px-6 py-3 bg-blue-600 text-white text-base font-medium hover:bg-blue-700 transition-all hover:shadow-lg inline-flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   >
-                    Get Demo Access
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        Get Demo Access
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </motion.button>
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="px-6 py-3 border-2 border-neutral-300 text-base font-medium hover:border-neutral-400 hover:bg-neutral-50 transition-all"
+                    disabled={isSubmitting}
+                    className="px-6 py-3 border-2 border-neutral-300 text-base font-medium hover:border-neutral-400 hover:bg-neutral-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
