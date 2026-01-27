@@ -17,11 +17,12 @@ import {
   DecorativeCircle 
 } from '@/app/components/animations';
 
-import podOverview from 'figma:asset/53116b53e241783a05034f48bb8a7135caea9c81.png';
-import podPortfolio from 'figma:asset/512d107fefb7536d15a12389ca5753bfb8b592fe.png';
-import podTenants from 'figma:asset/c776012da308ccdaaf238c8206e5bfab54b74653.png';
-import podReports from 'figma:asset/e250188935cf573c85d10c76c68dd9ce30e7becb.png';
-import podExpenses from 'figma:asset/11b1ad1eb91ba65540710f729236d29be60bca19.png';
+// Placeholder images for deployment - replace with your actual hosted images
+const podOverview = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop';
+const podPortfolio = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=675&fit=crop';
+const podTenants = 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&h=675&fit=crop';
+const podReports = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop';
+const podExpenses = 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=675&fit=crop';
 
 export function Projects() {
   const [showAccessModal, setShowAccessModal] = useState(false);
