@@ -28,7 +28,27 @@ export function Projects() {
       techStack: ['No-code platforms', 'AI automation', 'API integrations', 'Database design'],
       demo: 'https://demo.podsystem.ng',
       status: 'Live',
-      tag: 'Property Management SaaS'
+      tag: 'Property Management SaaS',
+      requiresAccess: true
+    },
+    {
+      title: 'POD Landing Page Website',
+      description: 'A professional marketing website for the POD system, designed to communicate value propositions, showcase features, and convert prospects into qualified leads. Built from scratch to establish market presence and drive demo requests.',
+      features: [
+        'Clean, conversion-focused design with clear CTAs',
+        'Responsive layout optimized for all devices',
+        'Feature sections highlighting key system capabilities',
+        'Trust signals and social proof elements',
+        'Lead capture forms integrated with CRM',
+        'Fast loading performance and SEO optimization',
+        'Professional copywriting aligned with target audience',
+        'Consistent branding and visual identity'
+      ],
+      techStack: ['React', 'Tailwind CSS', 'Modern web standards', 'Performance optimization'],
+      demo: 'https://podsystem.ng',
+      status: 'Live',
+      tag: 'Marketing Website',
+      requiresAccess: false
     }
   ];
 
@@ -63,14 +83,25 @@ export function Projects() {
                     </div>
                     <h2 className="text-3xl font-semibold tracking-tight text-neutral-900">{project.title}</h2>
                   </div>
-                  <BeamButton
-                    onClick={() => setShowAccessModal(true)}
-                    variant="primary"
-                    className="shrink-0"
-                  >
-                    View Live Demo
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </BeamButton>
+                  {project.requiresAccess ? (
+                    <BeamButton
+                      onClick={() => setShowAccessModal(true)}
+                      variant="primary"
+                      className="shrink-0"
+                    >
+                      View Live Demo
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </BeamButton>
+                  ) : (
+                    <BeamButton
+                      href={project.demo}
+                      variant="primary"
+                      className="shrink-0"
+                    >
+                      Visit Website
+                      <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </BeamButton>
+                  )}
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-10 mb-10">
@@ -81,17 +112,45 @@ export function Projects() {
                         {project.description}
                       </p>
 
-                      {/* Demo Video */}
-                      <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative rounded-lg">
-                        <iframe
-                          src="https://www.youtube.com/embed/kE6DWpnOkUE"
-                          title="POD System Demo Video"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full"
-                        />
-                      </div>
-                      <p className="text-sm text-neutral-500 italic text-center">Watch the full system walkthrough</p>
+                      {/* Demo Video or Screenshot */}
+                      {project.requiresAccess ? (
+                        <>
+                          <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative rounded-lg">
+                            <iframe
+                              src="https://www.youtube.com/embed/kE6DWpnOkUE"
+                              title="POD System Demo Video"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                              className="absolute inset-0 w-full h-full"
+                            />
+                          </div>
+                          <p className="text-sm text-neutral-500 italic text-center">Watch the full system walkthrough</p>
+                        </>
+                      ) : (
+                        <>
+                          <div className="border border-neutral-200 shadow-sm overflow-hidden rounded-lg bg-neutral-50 p-8">
+                            <div className="bg-white border border-neutral-200 rounded shadow-lg overflow-hidden">
+                              <div className="aspect-video bg-gradient-to-br from-blue-50 to-neutral-100 flex items-center justify-center">
+                                <div className="text-center space-y-4 p-8">
+                                  <div className="w-16 h-16 mx-auto bg-blue-600 rounded-full flex items-center justify-center">
+                                    <ExternalLink className="w-8 h-8 text-white" />
+                                  </div>
+                                  <p className="text-lg font-semibold text-neutral-900">Live Website Preview</p>
+                                  <a 
+                                    href={project.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block text-blue-600 hover:text-blue-700 font-medium underline"
+                                  >
+                                    {project.demo}
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-neutral-500 italic text-center">Visit the live website to explore</p>
+                        </>
+                      )}
                    </div>
 
                    {/* Sidebar Column */}
@@ -127,29 +186,57 @@ export function Projects() {
                       </div>
 
                       {/* CTA Box */}
-                      <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg">
-                        <p className="text-sm text-blue-900 mb-4 font-medium leading-relaxed">
-                          Built for real property management workflows with role-based access and multi-tenant architecture.
-                        </p>
-                        <button
-                          onClick={() => setShowAccessModal(true)}
-                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group"
-                        >
-                          Explore the live system
-                          <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </button>
-                      </div>
+                      {project.requiresAccess ? (
+                        <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg">
+                          <p className="text-sm text-blue-900 mb-4 font-medium leading-relaxed">
+                            Built for real property management workflows with role-based access and multi-tenant architecture.
+                          </p>
+                          <button
+                            onClick={() => setShowAccessModal(true)}
+                            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group"
+                          >
+                            Explore the live system
+                            <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg">
+                          <p className="text-sm text-blue-900 mb-4 font-medium leading-relaxed">
+                            A publicly accessible website showcasing the POD system to potential customers and driving conversions.
+                          </p>
+                          <a
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group"
+                          >
+                            Visit the live website
+                            <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </a>
+                        </div>
+                      )}
                    </div>
                 </div>
 
                 <div className="flex justify-end pt-6 border-t border-neutral-100">
-                  <BeamButton
-                    href="mailto:Adewunmi@podsystem.ng?subject=POD System Inquiry"
-                    variant="outline"
-                    className="border-neutral-200 text-neutral-600 hover:text-neutral-900"
-                  >
-                    Inquire About POD
-                  </BeamButton>
+                  {project.requiresAccess ? (
+                    <BeamButton
+                      href="mailto:Adewunmi@podsystem.ng?subject=POD System Inquiry"
+                      variant="outline"
+                      className="border-neutral-200 text-neutral-600 hover:text-neutral-900"
+                    >
+                      Inquire About POD
+                    </BeamButton>
+                  ) : (
+                    <BeamButton
+                      href={project.demo}
+                      variant="outline"
+                      className="border-neutral-200 text-neutral-600 hover:text-neutral-900"
+                    >
+                      View Live Site
+                      <ExternalLink className="w-4 h-4" />
+                    </BeamButton>
+                  )}
                 </div>
               </div>
             </article>
