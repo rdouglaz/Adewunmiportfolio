@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { ExpandableSection } from '@/app/components/ExpandableSection';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
 import { TechMarquee } from '@/app/components/TechMarquee';
+import { DashboardMockup } from '@/app/components/DashboardMockup';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'motion/react';
@@ -114,42 +115,70 @@ export function Home() {
           <DecorativeCircle size={60} color="bg-blue-400" />
         </div>
         
-        <div className="max-w-7xl mx-auto px-8 py-32 relative z-10">
-          <ScrollFadeIn blur>
-            <div className="max-w-4xl">
-              <ScrollFadeIn direction="down" delay={0.2}>
-                <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium mb-8 border border-blue-100">
-                  Business Systems Builder
-                </div>
-              </ScrollFadeIn>
-              
-              <ScrollFadeIn blur delay={0.3}>
-                <h1 className="text-6xl font-semibold mb-8 tracking-tight leading-tight">
-                  I build internal systems that help businesses run better
-                </h1>
-              </ScrollFadeIn>
-              
-              <ScrollFadeIn direction="up" delay={0.4}>
-                <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl">
-                  Property operations, reporting, workflows & automation — built with AI, no-code, and real operational thinking.
-                </p>
-              </ScrollFadeIn>
-              
-              <ScrollFadeIn direction="up" delay={0.5}>
-                <div className="flex gap-4">
-                  <BeamButton onClick={() => setShowAccessModal(true)} variant="primary">
-                    View Live Demo
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </BeamButton>
-                  <Link to="/contact">
-                    <BeamButton variant="outline" className="border-2 border-neutral-300 text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50">
-                      Contact Me
+        <div className="max-w-7xl mx-auto px-8 py-20 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Text Content */}
+            <ScrollFadeIn blur>
+              <div>
+                <ScrollFadeIn direction="down" delay={0.2}>
+                  <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium mb-8 border border-blue-100">
+                    Business Systems Builder
+                  </div>
+                </ScrollFadeIn>
+                
+                <ScrollFadeIn blur delay={0.3}>
+                  <h1 className="text-5xl lg:text-6xl font-semibold mb-8 tracking-tight leading-tight">
+                    I build internal systems that help businesses run better
+                  </h1>
+                </ScrollFadeIn>
+                
+                <ScrollFadeIn direction="up" delay={0.4}>
+                  <p className="text-xl text-neutral-600 mb-12 leading-relaxed">
+                    Property operations, reporting, workflows & automation — built with AI, no-code, and real operational thinking.
+                  </p>
+                </ScrollFadeIn>
+                
+                <ScrollFadeIn direction="up" delay={0.5}>
+                  <div className="flex gap-4 flex-wrap">
+                    <BeamButton onClick={() => setShowAccessModal(true)} variant="primary">
+                      View Live Demo
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </BeamButton>
-                  </Link>
-                </div>
-              </ScrollFadeIn>
-            </div>
-          </ScrollFadeIn>
+                    <Link to="/contact">
+                      <BeamButton variant="outline" className="border-2 border-neutral-300 text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50">
+                        Contact Me
+                      </BeamButton>
+                    </Link>
+                  </div>
+                </ScrollFadeIn>
+              </div>
+            </ScrollFadeIn>
+            
+            {/* Right: Dashboard Mockup */}
+            <ScrollFadeIn direction="right" delay={0.6}>
+              <div className="relative">
+                <DashboardMockup className="w-full" />
+                
+                {/* Floating Stats Badge */}
+                <motion.div
+                  className="absolute -bottom-4 sm:-bottom-6 -left-4 sm:-left-6 bg-white border-2 border-neutral-200 rounded-lg shadow-lg p-3 sm:p-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1, duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] sm:text-xs text-neutral-500">Live System</div>
+                      <div className="text-xs sm:text-sm font-semibold">Production Ready</div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </ScrollFadeIn>
+          </div>
         </div>
       </section>
 

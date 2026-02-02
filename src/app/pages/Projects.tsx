@@ -1,6 +1,7 @@
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
+import { DashboardMockup } from '@/app/components/DashboardMockup';
 import {
   BeamButton, 
   ScrollFadeIn, 
@@ -112,10 +113,17 @@ export function Projects() {
                         {project.description}
                       </p>
 
-                      {/* Demo Video or Screenshot */}
+                      {/* Demo Screenshot or Website Preview */}
                       {project.requiresAccess ? (
                         <>
-                          <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative rounded-lg">
+                          {/* Dashboard Mockup */}
+                          <div className="bg-neutral-50 p-6 rounded-lg border border-neutral-200">
+                            <DashboardMockup />
+                          </div>
+                          <p className="text-sm text-neutral-500 italic text-center -mt-4">Live dashboard interface</p>
+                          
+                          {/* Demo Video */}
+                          <div className="bg-neutral-900 border border-neutral-200 shadow-sm overflow-hidden aspect-video relative rounded-lg mt-8">
                             <iframe
                               src="https://www.youtube.com/embed/kE6DWpnOkUE"
                               title="POD System Demo Video"
