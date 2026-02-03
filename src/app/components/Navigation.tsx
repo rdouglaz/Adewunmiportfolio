@@ -49,6 +49,14 @@ export function Navigation() {
             >
               Contact
             </Link>
+            <Link 
+              to="/feedback" 
+              className={`text-base hover:text-neutral-900 transition-colors ${
+                isActive('/feedback') ? 'text-neutral-900 font-medium' : 'text-neutral-600'
+              }`}
+            >
+              Feedback
+            </Link>
             <BeamButton 
               href="https://demo.podsystem.ng"
               variant="primary"

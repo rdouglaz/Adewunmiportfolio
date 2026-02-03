@@ -33,7 +33,7 @@ export function Projects() {
       requiresAccess: true
     },
     {
-      title: 'POD Landing Page Website',
+      title: 'POD Website',
       description: 'A professional marketing website for the POD system, designed to communicate value propositions, showcase features, and convert prospects into qualified leads. Built from scratch to establish market presence and drive demo requests.',
       features: [
         'Clean, conversion-focused design with clear CTAs',

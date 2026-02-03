@@ -5,6 +5,8 @@ import { Home } from '@/app/pages/Home';
 import { Projects } from '@/app/pages/Projects';
 import { About } from '@/app/pages/About';
 import { Contact } from '@/app/pages/Contact';
+import { Admin } from '@/app/pages/Admin';
+import { Feedback } from '@/app/pages/Feedback';
 import { useEffect } from 'react';
 
 export default function App() {
@@ -36,6 +38,8 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />

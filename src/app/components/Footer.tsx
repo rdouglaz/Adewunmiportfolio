@@ -1,4 +1,6 @@
 import { ScrollFadeIn, StaggerContainer, StaggerItem } from '@/app/components/animations';
+import { Link } from 'react-router';
+import { Lock } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -41,6 +43,25 @@ export function Footer() {
                 >
                   Adewunmi@podsystem.ng
                 </a>
+              </StaggerItem>
+              <StaggerItem>
+                <Link 
+                  to="/feedback"
+                  className="text-base text-neutral-600 hover:text-blue-600 transition-colors font-medium"
+                >
+                  Send Feedback
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <div className="pt-3 mt-3 border-t border-neutral-200">
+                  <Link 
+                    to="/admin"
+                    className="text-sm text-neutral-500 hover:text-blue-600 transition-colors font-medium flex items-center gap-2"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    Admin Dashboard
+                  </Link>
+                </div>
               </StaggerItem>
             </StaggerContainer>
           </div>
