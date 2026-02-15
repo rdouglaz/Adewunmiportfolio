@@ -249,7 +249,7 @@ export function Home() {
                     controls
                     preload="metadata"
                     className="absolute inset-0 w-full h-full"
-                    poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect fill='%23171717' width='1280' height='720'/%3E%3Ctext x='50%25' y='50%25' fill='%23737373' text-anchor='middle' dy='.3em' font-family='system-ui' font-size='24'%3EPOD System Demo%3C/text%3E%3C/svg%3E"
+                    poster="https://chwjguxldansjzauqqwz.supabase.co/storage/v1/object/public/videos/Screenshot%202026-01-21%20140504.png"
                   >
                     <source src="https://chwjguxldansjzauqqwz.supabase.co/storage/v1/object/public/videos/202601270841(1).mp4" type="video/mp4" />
                     <p className="text-neutral-500 p-8 text-center">
