@@ -63,6 +63,15 @@ export function Footer() {
                   </Link>
                 </div>
               </StaggerItem>
+              <StaggerItem>
+                <Link 
+                  to="/agent"
+                  className="text-sm text-neutral-500 hover:text-blue-600 transition-colors font-medium flex items-center gap-2"
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  AI Agent Dashboard
+                </Link>
+              </StaggerItem>
             </StaggerContainer>
           </div>
         </ScrollFadeIn>

@@ -7,6 +7,7 @@ import { About } from '@/app/pages/About';
 import { Contact } from '@/app/pages/Contact';
 import { Admin } from '@/app/pages/Admin';
 import { Feedback } from '@/app/pages/Feedback';
+import { Agent } from '@/app/pages/Agent';
 import { useEffect } from 'react';
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/agent" element={<Agent />} />
           </Routes>
         </main>
         <Footer />

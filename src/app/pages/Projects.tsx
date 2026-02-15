@@ -1,5 +1,6 @@
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, Brain, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
 import { DashboardMockup } from '@/app/components/DashboardMockup';
 import {
@@ -250,6 +251,160 @@ export function Projects() {
             </article>
           </ScrollFadeIn>
         ))}
+      </div>
+
+      {/* AI Job Intelligence Agent Preview */}
+      <div className="mt-16">
+        <ScrollFadeIn delay={0.4}>
+          <article className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800 shadow-lg">
+            <div className="p-10">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm font-semibold tracking-wide rounded-full border border-blue-500/30">
+                      Live
+                    </span>
+                    <span className="text-sm text-slate-400 font-medium">Autonomous Intelligence System</span>
+                  </div>
+                  <h2 className="text-3xl font-semibold tracking-tight text-white flex items-center gap-3">
+                    <Brain className="w-8 h-8 text-blue-400" />
+                    AI Job Intelligence Agent
+                  </h2>
+                </div>
+                <Link to="/agent">
+                  <BeamButton
+                    variant="primary"
+                    className="shrink-0 bg-blue-600 hover:bg-blue-700"
+                  >
+                    View Live System
+                    <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </BeamButton>
+                </Link>
+              </div>
+
+              <div className="grid lg:grid-cols-12 gap-10 mb-10">
+                {/* Main Content Column */}
+                <div className="lg:col-span-7 space-y-8">
+                  {/* Description */}
+                  <p className="text-lg text-slate-300 leading-relaxed">
+                    A fully autonomous job intelligence system that scrapes multiple job sources daily, uses GPT-4 to score relevance based on custom criteria, and delivers high-quality opportunities directly to your inbox with zero manual effort.
+                  </p>
+
+                  {/* System Preview */}
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                    <div className="grid grid-cols-4 gap-4 mb-6">
+                      <div className="text-center p-4 bg-slate-900/50 rounded-lg">
+                        <div className="text-3xl mb-2">📥</div>
+                        <div className="text-2xl font-bold text-white">50+</div>
+                        <div className="text-xs text-slate-400 mt-1">Daily Jobs</div>
+                      </div>
+                      <div className="text-center p-4 bg-slate-900/50 rounded-lg">
+                        <div className="text-3xl mb-2">🧠</div>
+                        <div className="text-2xl font-bold text-white">AI</div>
+                        <div className="text-xs text-slate-400 mt-1">Scored</div>
+                      </div>
+                      <div className="text-center p-4 bg-slate-900/50 rounded-lg">
+                        <div className="text-3xl mb-2">🔥</div>
+                        <div className="text-2xl font-bold text-emerald-400">Top</div>
+                        <div className="text-xs text-slate-400 mt-1">Matches</div>
+                      </div>
+                      <div className="text-center p-4 bg-slate-900/50 rounded-lg">
+                        <div className="text-3xl mb-2">📧</div>
+                        <div className="text-2xl font-bold text-white">Auto</div>
+                        <div className="text-xs text-slate-400 mt-1">Emails</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-sm text-slate-400">
+                      <Zap className="w-4 h-4 text-blue-400" />
+                      <span>Fully autonomous • Runs daily • Zero manual work</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sidebar Column */}
+                <div className="lg:col-span-5 space-y-8">
+                  {/* Tech Stack */}
+                  <div className="bg-slate-800/50 border border-slate-700 p-6 rounded-lg">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Tech Stack</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1.5 bg-slate-900/50 border border-slate-600 text-slate-300 text-sm font-medium rounded shadow-sm">
+                        React + TypeScript
+                      </span>
+                      <span className="px-3 py-1.5 bg-slate-900/50 border border-slate-600 text-slate-300 text-sm font-medium rounded shadow-sm">
+                        Supabase
+                      </span>
+                      <span className="px-3 py-1.5 bg-slate-900/50 border border-slate-600 text-slate-300 text-sm font-medium rounded shadow-sm">
+                        OpenAI GPT-4
+                      </span>
+                      <span className="px-3 py-1.5 bg-slate-900/50 border border-slate-600 text-slate-300 text-sm font-medium rounded shadow-sm">
+                        Recharts
+                      </span>
+                      <span className="px-3 py-1.5 bg-slate-900/50 border border-slate-600 text-slate-300 text-sm font-medium rounded shadow-sm">
+                        Motion Animations
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Key Features */}
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4 text-white">Key Features</h3>
+                    <StaggerContainer className="space-y-3">
+                      <StaggerItem>
+                        <div className="flex items-start gap-3 group">
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span className="text-base text-slate-300 leading-relaxed">Autonomous job scraping across multiple sources</span>
+                        </div>
+                      </StaggerItem>
+                      <StaggerItem>
+                        <div className="flex items-start gap-3 group">
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span className="text-base text-slate-300 leading-relaxed">GPT-powered relevance scoring</span>
+                        </div>
+                      </StaggerItem>
+                      <StaggerItem>
+                        <div className="flex items-start gap-3 group">
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span className="text-base text-slate-300 leading-relaxed">Automated email digests</span>
+                        </div>
+                      </StaggerItem>
+                      <StaggerItem>
+                        <div className="flex items-start gap-3 group">
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span className="text-base text-slate-300 leading-relaxed">Real-time analytics dashboard</span>
+                        </div>
+                      </StaggerItem>
+                    </StaggerContainer>
+                  </div>
+
+                  {/* CTA Box */}
+                  <div className="bg-blue-500/10 border border-blue-500/30 p-6 rounded-lg">
+                    <p className="text-sm text-blue-300 mb-4 font-medium leading-relaxed">
+                      Demonstration of full-stack AI capabilities with autonomous workflows, intelligent processing, and production-ready architecture.
+                    </p>
+                    <Link to="/agent">
+                      <button className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold text-sm group">
+                        Access the live dashboard
+                        <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-6 border-t border-slate-800">
+                <Link to="/agent">
+                  <BeamButton
+                    variant="outline"
+                    className="border-slate-700 text-slate-300 hover:text-white hover:border-slate-600"
+                  >
+                    Explore Full System
+                    <Brain className="w-4 h-4" />
+                  </BeamButton>
+                </Link>
+              </div>
+            </div>
+          </article>
+        </ScrollFadeIn>
       </div>
 
       {/* More Projects Coming */}
