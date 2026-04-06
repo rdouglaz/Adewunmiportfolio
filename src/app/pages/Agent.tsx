@@ -77,6 +77,8 @@ interface AgentStats {
   high_matches: number;
   pending_review: number;
   last_run: string;
+  ai_calls_today: number;
+  ai_calls_month: number;
 }
 
 interface EmailHistory {
@@ -738,6 +740,90 @@ export function Agent() {
               {todayStats.avgScore}%
             </div>
             <div className="text-sm text-slate-400">Average Score Today</div>
+          </Card>
+        </motion.div>
+
+        {/* AI Usage Metrics */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <Card className={`p-6 border-2 backdrop-blur-xl ${
+            (stats?.ai_calls_today || 0) >= 15 
+              ? 'bg-red-500/10 border-red-500/30' 
+              : (stats?.ai_calls_today || 0) >= 12
+              ? 'bg-yellow-500/10 border-yellow-500/30'
+              : 'bg-slate-900/50 border-slate-800'
+          }`}>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Sparkles className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-lg font-semibold text-white">AI Calls Today</h3>
+                </div>
+                <div className="text-4xl font-bold text-white">
+                  {stats?.ai_calls_today || 0}
+                  <span className="text-xl text-slate-400 ml-2">/ 15</span>
+                </div>
+              </div>
+              {(stats?.ai_calls_today || 0) >= 15 && (
+                <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                  Limit Reached
+                </Badge>
+              )}
+              {(stats?.ai_calls_today || 0) >= 12 && (stats?.ai_calls_today || 0) < 15 && (
+                <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+                  Near Limit
+                </Badge>
+              )}
+            </div>
+            <Progress 
+              value={((stats?.ai_calls_today || 0) / 15) * 100} 
+              className="h-2"
+            />
+            <p className="text-sm text-slate-400 mt-2">
+              OpenAI scoring optimized to max 15 jobs/day
+            </p>
+          </Card>
+
+          <Card className={`p-6 border-2 backdrop-blur-xl ${
+            (stats?.ai_calls_month || 0) >= 300 
+              ? 'bg-red-500/10 border-red-500/30' 
+              : (stats?.ai_calls_month || 0) >= 250
+              ? 'bg-yellow-500/10 border-yellow-500/30'
+              : 'bg-slate-900/50 border-slate-800'
+          }`}>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <BarChart3 className="w-5 h-5 text-purple-400" />
+                  <h3 className="text-lg font-semibold text-white">AI Calls This Month</h3>
+                </div>
+                <div className="text-4xl font-bold text-white">
+                  {stats?.ai_calls_month || 0}
+                  <span className="text-xl text-slate-400 ml-2">/ 300</span>
+                </div>
+              </div>
+              {(stats?.ai_calls_month || 0) >= 300 && (
+                <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                  Monthly Cap
+                </Badge>
+              )}
+              {(stats?.ai_calls_month || 0) >= 250 && (stats?.ai_calls_month || 0) < 300 && (
+                <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+                  Near Cap
+                </Badge>
+              )}
+            </div>
+            <Progress 
+              value={((stats?.ai_calls_month || 0) / 300) * 100} 
+              className="h-2"
+            />
+            <p className="text-sm text-slate-400 mt-2">
+              Cost optimization with 3-layer filtering funnel
+            </p>
           </Card>
         </motion.div>
 

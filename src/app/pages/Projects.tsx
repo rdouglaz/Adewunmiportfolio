@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink, Brain, Zap } from 'lucide-react';
+import { ArrowRight, ExternalLink, Brain, Zap, ShoppingBag, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
@@ -50,7 +50,51 @@ export function Projects() {
       demo: 'https://podsystem.ng',
       status: 'Live',
       tag: 'Marketing Website',
-      requiresAccess: false
+      requiresAccess: false,
+      ctaText: 'A publicly accessible website showcasing the POD system to potential customers and driving conversions.'
+    },
+    {
+      title: "Oyken's Global Stores",
+      description: 'A modern e-commerce platform built for a global retail brand. Features a clean, conversion-optimized storefront with product browsing, category filtering, cart management, and a seamless checkout experience — designed to drive sales and deliver a premium shopping experience.',
+      features: [
+        'Clean, modern storefront with intuitive navigation',
+        'Product catalog with category filtering and search',
+        'Shopping cart with real-time updates',
+        'Responsive design optimized for mobile and desktop',
+        'Fast page loads and smooth user experience',
+        'Product detail pages with image galleries',
+        'Secure checkout flow',
+        'Brand-consistent design and visual identity'
+      ],
+      techStack: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'E-commerce Integration'],
+      demo: 'https://oykensglobalstores.vercel.app/',
+      status: 'Live',
+      tag: 'E-commerce Platform',
+      requiresAccess: false,
+      icon: 'shopping',
+      ctaText: 'A fully functional e-commerce storefront built for a global retail brand, delivering a seamless shopping experience across all devices.',
+      previewVideo: 'https://chwjguxldansjzauqqwz.supabase.co/storage/v1/object/public/videos/oyenkan.webm'
+    },
+    {
+      title: 'MailOps',
+      description: 'A streamlined email automation and campaign management tool built for teams that want to send smarter. MailOps lets you design, schedule, and track email campaigns with ease — from one-off broadcasts to multi-step automated sequences — without the bloat of enterprise platforms.',
+      features: [
+        'Drag-and-drop email campaign builder',
+        'Multi-step automated drip sequences',
+        'Audience segmentation and list management',
+        'Scheduled and triggered email delivery',
+        'Email template library with dynamic variables',
+        'Real-time delivery, open rate, and click tracking',
+        'A/B testing for subject lines and content',
+        'Simple, clean dashboard for campaign performance'
+      ],
+      techStack: ['Node.js', 'Email API Integration', 'React', 'Tailwind CSS', 'Vercel', 'Automation Workflows'],
+      demo: 'https://mailops.podsystem.ng/',
+      status: 'Live',
+      tag: 'Email Automation Tool',
+      requiresAccess: false,
+      icon: 'mail',
+      ctaText: 'A no-fuss email automation tool for teams that need reliable campaign delivery, audience segmentation, and performance tracking — all in one clean interface.'
     }
   ];
 
@@ -139,6 +183,36 @@ export function Projects() {
                           </div>
                           <p className="text-sm text-neutral-500 italic text-center">Watch the full system walkthrough</p>
                         </>
+                      ) : project.previewVideo ? (
+                        <>
+                          <div className="border border-neutral-200 shadow-sm overflow-hidden rounded-lg bg-neutral-900 relative group">
+                            <div className="aspect-video relative overflow-hidden">
+                              <video
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                preload="metadata"
+                                className="absolute inset-0 w-full h-full object-cover"
+                              >
+                                <source src={project.previewVideo} type="video/webm" />
+                              </video>
+                              {/* Overlay with visit button on hover */}
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
+                                <a
+                                  href={project.demo}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center gap-2 px-5 py-2.5 bg-white text-neutral-900 rounded-lg hover:bg-neutral-100 font-medium text-sm shadow-lg"
+                                >
+                                  Visit Website
+                                  <ExternalLink className="w-4 h-4" />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-neutral-500 italic text-center">Live preview — hover to visit</p>
+                        </>
                       ) : (
                         <>
                           <div className="border border-neutral-200 shadow-sm overflow-hidden rounded-lg bg-neutral-50 p-8">
@@ -153,9 +227,10 @@ export function Projects() {
                                     href={project.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-block text-blue-600 hover:text-blue-700 font-medium underline"
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors text-sm"
                                   >
-                                    {project.demo}
+                                    Visit Website
+                                    <ExternalLink className="w-4 h-4" />
                                   </a>
                                 </div>
                               </div>
@@ -215,7 +290,7 @@ export function Projects() {
                       ) : (
                         <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg">
                           <p className="text-sm text-blue-900 mb-4 font-medium leading-relaxed">
-                            A publicly accessible website showcasing the POD system to potential customers and driving conversions.
+                            {project.ctaText}
                           </p>
                           <a
                             href={project.demo}

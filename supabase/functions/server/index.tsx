@@ -463,6 +463,9 @@ app.post("/make-server-1bf47000/agent/stats", async (c) => {
       return dateB - dateA;
     });
     const lastRun = sortedRuns.length > 0 ? sortedRuns[0].value.run_date : null;
+    
+    // Get AI usage stats
+    const aiUsage = await getAIUsageStats();
 
     return c.json({ 
       success: true, 
@@ -470,7 +473,9 @@ app.post("/make-server-1bf47000/agent/stats", async (c) => {
         total_jobs: totalJobs,
         high_matches: highMatches,
         pending_review: pendingReview,
-        last_run: lastRun
+        last_run: lastRun,
+        ai_calls_today: aiUsage.today,
+        ai_calls_month: aiUsage.month
       }
     });
   } catch (error) {
@@ -498,58 +503,155 @@ app.post("/make-server-1bf47000/agent/run", async (c) => {
     
     let jobsScraped = 0;
     let jobsInserted = 0;
-    let jobsScored = 0;
+    let jobsFiltered = 0;
+    let jobsHeuristicScored = 0;
+    let jobsAIScored = 0;
+    let aiCallsUsed = 0;
     let highMatches = 0;
     let emailsSent = 0;
     let status = 'success';
     let errorMessage = '';
 
     try {
+      // Check AI usage limits
+      const aiUsage = await getAIUsageStats();
+      const canUseAI = aiUsage.today < MAX_AI_PER_DAY && aiUsage.month < MAX_AI_PER_MONTH;
+      const aiQuotaRemaining = Math.min(
+        MAX_AI_PER_DAY - aiUsage.today,
+        MAX_AI_PER_MONTH - aiUsage.month
+      );
+      
+      console.log(`AI Usage - Today: ${aiUsage.today}/${MAX_AI_PER_DAY}, Month: ${aiUsage.month}/${MAX_AI_PER_MONTH}`);
+
       // Step 1: Scrape jobs
       const scrapedJobs = await scrapeJobs();
       jobsScraped = scrapedJobs.length;
+      console.log(`Scraped ${jobsScraped} jobs`);
 
       // Step 2: Insert new jobs (deduplicate)
+      const newJobs = [];
       for (const job of scrapedJobs) {
         const jobId = `job_${job.external_id}`;
         const existing = await kv.get(jobId);
         
         if (!existing) {
-          await kv.set(jobId, {
-            ...job,
-            created_at: new Date().toISOString(),
-            is_emailed: false,
-            score: null,
-            score_reason: null
-          });
-          jobsInserted++;
+          newJobs.push({ id: jobId, data: job });
         }
       }
+      jobsInserted = newJobs.length;
+      console.log(`${jobsInserted} new jobs to process`);
 
-      // Step 3: Score jobs that don't have scores
-      const allJobs = await kv.getByPrefix('job_');
-      const unscoredJobs = allJobs.filter((job: any) => job.value.score === null);
+      // Step 3: LAYER 1 - Apply hard filters
+      const filteredJobs = newJobs.filter(job => passesHardFilters(job.data));
+      jobsFiltered = filteredJobs.length;
+      console.log(`${jobsFiltered} jobs passed hard filters`);
+
+      // Step 4: LAYER 2 - Calculate heuristic scores
+      const heuristicScoredJobs = filteredJobs.map(job => ({
+        ...job,
+        heuristicScore: calculateHeuristicScore(job.data)
+      }));
+
+      // Keep only jobs with heuristic score >= threshold
+      const qualifiedJobs = heuristicScoredJobs.filter(job => job.heuristicScore >= HEURISTIC_THRESHOLD);
+      jobsHeuristicScored = qualifiedJobs.length;
+      console.log(`${jobsHeuristicScored} jobs passed heuristic threshold (>=${HEURISTIC_THRESHOLD})`);
+
+      // Step 5: Sort by heuristic score (highest first)
+      qualifiedJobs.sort((a, b) => b.heuristicScore - a.heuristicScore);
+
+      // Step 6: Separate by region for balanced quota
+      const nigeriaJobs = qualifiedJobs.filter(job => {
+        const loc = job.data.location.toLowerCase();
+        return loc.includes('nigeria') || loc.includes('lagos') || loc.includes('africa');
+      });
+      const globalJobs = qualifiedJobs.filter(job => !nigeriaJobs.includes(job));
+
+      // Step 7: LAYER 3 - Apply AI scoring with regional quotas
+      const jobsForAI: any[] = [];
       
-      for (const job of unscoredJobs) {
-        try {
-          const scoring = await scoreJob(job.value);
-          await kv.set(job.key, {
-            ...job.value,
-            score: scoring.final_score,
-            score_reason: scoring.reasoning
-          });
-          jobsScored++;
-          
-          if (scoring.final_score >= 75) {
-            highMatches++;
-          }
-        } catch (err) {
-          console.error(`Error scoring job ${job.key}:`, err);
+      if (canUseAI && aiQuotaRemaining > 0) {
+        // Take up to NIGERIA_QUOTA from Nigeria jobs
+        const nigeriaQuota = Math.min(NIGERIA_QUOTA, nigeriaJobs.length, aiQuotaRemaining);
+        jobsForAI.push(...nigeriaJobs.slice(0, nigeriaQuota));
+        
+        // Reallocate unused Nigeria quota to Global
+        const remainingQuota = aiQuotaRemaining - nigeriaQuota;
+        const globalQuota = Math.min(GLOBAL_QUOTA + (NIGERIA_QUOTA - nigeriaQuota), globalJobs.length, remainingQuota);
+        jobsForAI.push(...globalJobs.slice(0, globalQuota));
+        
+        console.log(`AI Scoring: ${nigeriaQuota} Nigeria jobs, ${globalQuota} Global jobs`);
+      }
+
+      // Step 8: Auto-approve high heuristic scores
+      const autoApproved = qualifiedJobs.filter(job => job.heuristicScore >= AUTO_APPROVE_THRESHOLD);
+      console.log(`${autoApproved.length} jobs auto-approved (heuristic >=${AUTO_APPROVE_THRESHOLD})`);
+
+      // Save auto-approved jobs
+      for (const job of autoApproved) {
+        await kv.set(job.id, {
+          ...job.data,
+          created_at: new Date().toISOString(),
+          is_emailed: false,
+          score: job.heuristicScore,
+          score_reason: `Auto-approved with heuristic score ${job.heuristicScore}`
+        });
+        
+        if (job.heuristicScore >= 75) {
+          highMatches++;
         }
       }
 
-      // Step 4: Send email notifications for high matches
-      // (Simplified - in production, this would send actual emails)
+      // Step 9: AI score selected jobs (if quota available)
+      if (canUseAI && jobsForAI.length > 0) {
+        const aiScores = await scoreJobsWithAI(jobsForAI.map(j => j.data));
+        jobsAIScored = aiScores.size;
+        aiCallsUsed = jobsAIScored;
+        
+        console.log(`AI scored ${jobsAIScored} jobs`);
+
+        // Save AI-scored jobs
+        for (const job of jobsForAI) {
+          const aiScore = aiScores.get(job.data.external_id);
+          if (aiScore) {
+            await kv.set(job.id, {
+              ...job.data,
+              created_at: new Date().toISOString(),
+              is_emailed: false,
+              score: aiScore.final_score,
+              score_reason: aiScore.reasoning
+            });
+            
+            if (aiScore.final_score >= 75) {
+              highMatches++;
+            }
+          }
+        }
+      } else {
+        console.log('AI quota exhausted or unavailable - using heuristic only');
+      }
+
+      // Step 10: Save remaining jobs with heuristic scores only
+      const jobsNotAIScored = qualifiedJobs.filter(
+        job => !autoApproved.includes(job) && !jobsForAI.includes(job)
+      );
+      
+      for (const job of jobsNotAIScored) {
+        await kv.set(job.id, {
+          ...job.data,
+          created_at: new Date().toISOString(),
+          is_emailed: false,
+          score: job.heuristicScore,
+          score_reason: `Heuristic score: ${job.heuristicScore} (AI quota not available)`
+        });
+        
+        if (job.heuristicScore >= 75) {
+          highMatches++;
+        }
+      }
+
+      // Step 11: Send email notifications for high matches
+      const allJobs = await kv.getByPrefix('job_');
       const highMatchJobs = allJobs.filter(
         (job: any) => job.value.score >= 75 && !job.value.is_emailed
       );
@@ -576,7 +678,11 @@ app.post("/make-server-1bf47000/agent/run", async (c) => {
       run_date: runDate,
       jobs_scraped: jobsScraped,
       jobs_inserted: jobsInserted,
-      jobs_scored: jobsScored,
+      jobs_filtered: jobsFiltered,
+      jobs_heuristic_scored: jobsHeuristicScored,
+      jobs_ai_scored: jobsAIScored,
+      ai_calls_used: aiCallsUsed,
+      jobs_scored: jobsHeuristicScored + jobsAIScored, // Legacy compatibility
       high_matches: highMatches,
       emails_sent: emailsSent,
       status,
@@ -589,7 +695,10 @@ app.post("/make-server-1bf47000/agent/run", async (c) => {
         id: runId,
         jobs_scraped: jobsScraped,
         jobs_inserted: jobsInserted,
-        jobs_scored: jobsScored,
+        jobs_filtered: jobsFiltered,
+        jobs_heuristic_scored: jobsHeuristicScored,
+        jobs_ai_scored: jobsAIScored,
+        ai_calls_used: aiCallsUsed,
         high_matches: highMatches,
         emails_sent: emailsSent,
         status
@@ -607,6 +716,131 @@ app.post("/make-server-1bf47000/agent/run", async (c) => {
 // ========================================
 // AGENT HELPER FUNCTIONS
 // ========================================
+
+// Configuration constants
+const MAX_AI_PER_DAY = 15;
+const MAX_AI_PER_MONTH = 300;
+const HEURISTIC_THRESHOLD = 60;
+const AUTO_APPROVE_THRESHOLD = 85;
+const MAX_DESCRIPTION_LENGTH = 700;
+const GLOBAL_QUOTA = 10;
+const NIGERIA_QUOTA = 5;
+
+// Layer 1: Hard filters - immediately discard jobs
+function passesHardFilters(job: any): boolean {
+  const titleLower = job.title.toLowerCase();
+  const descLower = job.description.toLowerCase();
+  
+  // Must contain React OR Next.js
+  const hasReactOrNext = 
+    titleLower.includes('react') || 
+    descLower.includes('react') ||
+    titleLower.includes('next.js') || 
+    titleLower.includes('nextjs') ||
+    descLower.includes('next.js') || 
+    descLower.includes('nextjs');
+  
+  if (!hasReactOrNext) return false;
+  
+  // Must be Remote OR Nigeria-based
+  const locationLower = job.location.toLowerCase();
+  const isRemoteOrNigeria = 
+    job.remote_type === 'fully_remote' || 
+    locationLower.includes('nigeria') ||
+    locationLower.includes('lagos') ||
+    locationLower.includes('africa');
+  
+  if (!isRemoteOrNigeria) return false;
+  
+  // Exclude explicit Senior-only roles
+  const experienceLower = job.experience_level?.toLowerCase() || '';
+  const isSeniorOnly = 
+    experienceLower === 'senior' && 
+    (titleLower.includes('senior') || descLower.includes('senior only'));
+  
+  if (isSeniorOnly) return false;
+  
+  // Exclude low salary (if exists)
+  if (job.salary_min_usd && job.salary_min_usd < 2000) return false;
+  
+  return true;
+}
+
+// Layer 2: Heuristic scoring - score without AI
+function calculateHeuristicScore(job: any): number {
+  let score = 0;
+  
+  const titleLower = job.title.toLowerCase();
+  const descLower = job.description.toLowerCase();
+  const locationLower = job.location.toLowerCase();
+  
+  // +30 if title contains "React"
+  if (titleLower.includes('react')) score += 30;
+  
+  // +20 if tech stack includes "Next.js"
+  const techStackLower = job.tech_stack?.map((t: string) => t.toLowerCase()) || [];
+  if (techStackLower.some((t: string) => t.includes('next') || t === 'nextjs')) {
+    score += 20;
+  }
+  
+  // +20 if fully remote
+  if (job.remote_type === 'fully_remote') score += 20;
+  
+  // +15 if Nigeria-based
+  if (locationLower.includes('nigeria') || locationLower.includes('lagos') || locationLower.includes('africa')) {
+    score += 15;
+  }
+  
+  // +20 if salary >= $2,000
+  if (job.salary_min_usd && job.salary_min_usd >= 2000) score += 20;
+  
+  // +10 if Mid-level role
+  const experienceLower = job.experience_level?.toLowerCase() || '';
+  if (experienceLower === 'mid' || experienceLower === 'mid-level') score += 10;
+  
+  return score;
+}
+
+// Get AI usage stats
+async function getAIUsageStats() {
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const currentMonth = new Date().toISOString().substring(0, 7); // YYYY-MM
+  
+  // Get today's usage
+  const todayKey = `ai_usage_${today}`;
+  const todayUsage = await kv.get(todayKey) || { count: 0 };
+  
+  // Get month's usage
+  const monthKey = `ai_usage_month_${currentMonth}`;
+  const monthUsage = await kv.get(monthKey) || { count: 0 };
+  
+  return {
+    today: todayUsage.count || 0,
+    month: monthUsage.count || 0
+  };
+}
+
+// Increment AI usage counter
+async function incrementAIUsage() {
+  const today = new Date().toISOString().split('T')[0];
+  const currentMonth = new Date().toISOString().substring(0, 7);
+  
+  // Increment today
+  const todayKey = `ai_usage_${today}`;
+  const todayUsage = await kv.get(todayKey) || { count: 0 };
+  await kv.set(todayKey, { count: (todayUsage.count || 0) + 1, date: today });
+  
+  // Increment month
+  const monthKey = `ai_usage_month_${currentMonth}`;
+  const monthUsage = await kv.get(monthKey) || { count: 0 };
+  await kv.set(monthKey, { count: (monthUsage.count || 0) + 1, month: currentMonth });
+}
+
+// Trim description to max length
+function trimDescription(description: string): string {
+  if (description.length <= MAX_DESCRIPTION_LENGTH) return description;
+  return description.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
+}
 
 // Mock job scraping function
 async function scrapeJobs() {
@@ -651,62 +885,130 @@ async function scrapeJobs() {
   return mockJobs;
 }
 
-// Mock OpenAI scoring function
-async function scoreJob(job: any) {
-  // In production, this would call OpenAI API
-  // For now, use simple heuristic scoring
+// OpenAI scoring function (batched)
+async function scoreJobsWithAI(jobs: any[]): Promise<Map<string, any>> {
+  const openAIKey = Deno.env.get('OPENAI_API_KEY');
+  const results = new Map<string, any>();
   
-  let salaryScore = 0;
-  if (job.salary_min_usd >= 2000 && job.salary_max_usd <= 3500) {
-    salaryScore = 100;
-  } else if (job.salary_min_usd >= 1500) {
-    salaryScore = 70;
-  } else {
-    salaryScore = 40;
+  // If no OpenAI key, use heuristic fallback
+  if (!openAIKey) {
+    console.log('No OpenAI key - using heuristic scoring');
+    for (const job of jobs) {
+      const heuristicScore = calculateHeuristicScore(job);
+      results.set(job.external_id, {
+        final_score: heuristicScore,
+        reasoning: 'Scored using heuristic method (no OpenAI key provided)'
+      });
+    }
+    return results;
   }
+  
+  // Batch jobs in groups of 5
+  const batchSize = 5;
+  for (let i = 0; i < jobs.length; i += batchSize) {
+    const batch = jobs.slice(i, i + batchSize);
+    
+    try {
+      // Build prompt for batch
+      const prompt = `You are a job matching AI. Score these ${batch.length} jobs for a React/Next.js developer.
 
-  let stackScore = 0;
-  const preferredStack = ['react', 'next.js', 'nextjs', 'typescript', 'tailwind'];
-  const jobStack = job.tech_stack.map((t: string) => t.toLowerCase());
-  const matchedTech = jobStack.filter((t: string) => 
-    preferredStack.some(p => t.includes(p))
-  );
-  stackScore = Math.min(100, (matchedTech.length / 3) * 100);
+Criteria:
+- Tech stack match (React/Next.js preferred)
+- Salary range ($2k-$3.5k/month ideal)
+- Remote-friendly
+- Mid-level experience
 
-  let remoteScore = 0;
-  if (job.remote_type === 'fully_remote') {
-    remoteScore = 100;
-  } else if (job.remote_type === 'hybrid') {
-    remoteScore = 50;
+For each job, provide:
+1. Score (0-100)
+2. Brief reason (1 sentence)
+
+Jobs:
+${batch.map((job, idx) => `
+Job ${idx + 1}:
+Title: ${job.title}
+Company: ${job.company}
+Location: ${job.location}
+Salary: ${job.salary_original || 'Not specified'}
+Tech: ${job.tech_stack?.join(', ') || 'Not specified'}
+Experience: ${job.experience_level || 'Not specified'}
+Description: ${trimDescription(job.description)}
+`).join('\n---\n')}
+
+Respond in JSON format:
+[
+  {"job": 1, "score": 85, "reason": "Strong React/Next.js match with good salary"},
+  {"job": 2, "score": 70, "reason": "Good fit but lower salary range"}
+]`;
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${openAIKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          temperature: 0,
+          messages: [
+            { role: 'system', content: 'You are a precise job matching assistant. Always respond with valid JSON.' },
+            { role: 'user', content: prompt }
+          ]
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      const content = data.choices[0].message.content;
+      
+      // Parse JSON response
+      const scores = JSON.parse(content);
+      
+      // Map scores back to jobs
+      scores.forEach((result: any, idx: number) => {
+        if (batch[idx]) {
+          results.set(batch[idx].external_id, {
+            final_score: result.score,
+            reasoning: result.reason
+          });
+          
+          // Increment AI usage counter
+          incrementAIUsage();
+        }
+      });
+      
+    } catch (error) {
+      console.error('Error scoring batch:', error);
+      // Fallback to heuristic for this batch
+      for (const job of batch) {
+        const heuristicScore = calculateHeuristicScore(job);
+        results.set(job.external_id, {
+          final_score: heuristicScore,
+          reasoning: 'AI scoring failed, using heuristic fallback'
+        });
+      }
+    }
   }
+  
+  return results;
+}
 
-  let experienceScore = 0;
-  if (job.experience_level === 'mid' || job.experience_level === 'junior') {
-    experienceScore = 100;
-  } else if (job.experience_level === 'senior') {
-    experienceScore = 70;
-  }
-
-  const companyScore = 75; // Mock score
-
-  const finalScore = Math.round(
-    (salaryScore * 0.3) + 
-    (stackScore * 0.3) + 
-    (remoteScore * 0.2) + 
-    (experienceScore * 0.1) + 
-    (companyScore * 0.1)
-  );
-
-  const reasoning = `Salary range ${job.salary_original} is ${salaryScore >= 80 ? 'excellent' : 'acceptable'}. \nTech stack matches ${matchedTech.length} of your preferred technologies. \n${job.remote_type === 'fully_remote' ? 'Fully remote position.' : 'Not fully remote.'} \nExperience level: ${job.experience_level}.`;
-
+// Mock OpenAI scoring function (for jobs that need AI)
+async function scoreJob(job: any) {
+  // This is the old function - now replaced by scoreJobsWithAI
+  // Keeping for backward compatibility
+  const heuristicScore = calculateHeuristicScore(job);
+  
   return {
-    salary_score: salaryScore,
-    stack_score: stackScore,
-    remote_score: remoteScore,
-    experience_score: experienceScore,
-    company_score: companyScore,
-    final_score: finalScore,
-    reasoning
+    salary_score: job.salary_min_usd >= 2000 ? 100 : 70,
+    stack_score: 80,
+    remote_score: job.remote_type === 'fully_remote' ? 100 : 50,
+    experience_score: job.experience_level === 'mid' ? 100 : 70,
+    company_score: 75,
+    final_score: heuristicScore,
+    reasoning: `Heuristic score: ${heuristicScore}`
   };
 }
 
