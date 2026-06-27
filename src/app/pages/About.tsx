@@ -1,38 +1,40 @@
 import { ArrowRight } from 'lucide-react';
-import { 
-  BeamButton, 
-  ScrollFadeIn, 
-  StaggerContainer, 
+import {
+  BeamButton,
+  ScrollFadeIn,
+  StaggerContainer,
   StaggerItem,
-  DecorativeCircle 
+  DecorativeCircle
 } from '@/app/components/animations';
 
 export function About() {
   return (
     <div className="max-w-5xl mx-auto px-8 py-20 relative">
-      {/* Decorative elements */}
       <div className="absolute top-10 right-10 opacity-20">
         <DecorativeCircle size={70} withPulse />
       </div>
-      
+
       <ScrollFadeIn blur>
         <h1 className="text-5xl font-semibold mb-6 tracking-tight">About</h1>
         <p className="text-xl text-neutral-600 mb-16 leading-relaxed">
-          Building practical internal systems for real business operations
+          AI Product Builder. Founder. Someone who turns ideas into products.
         </p>
       </ScrollFadeIn>
-      
+
       <div className="space-y-16">
         <ScrollFadeIn delay={0.1}>
           <section>
             <div className="bg-blue-50 border-l-4 border-blue-600 p-8 mb-8">
               <p className="text-xl text-neutral-900 leading-relaxed font-medium">
-                I build internal systems that help businesses see clearly and operate better.
+                I design and build AI-native products — from LLM-powered knowledge systems to internal business platforms.
               </p>
             </div>
-            
+
             <p className="text-lg text-neutral-600 leading-relaxed mb-6">
-              Most businesses don't need flashy interfaces or complex features. They need systems that match how they actually work — clear, organized, and built for the people who use them every day.
+              I didn't start in AI. I started in operations — watching businesses run on spreadsheets, scattered tools, and manual processes that burned everyone's time. That frustration pushed me toward building. First internal systems, then smarter systems, and eventually AI-native products where the model is the mechanic, not the add-on.
+            </p>
+            <p className="text-lg text-neutral-600 leading-relaxed">
+              Today I build at the intersection of product thinking, AI, and real operational problems. The goal is always the same: something people actually use, not something that looks good in a pitch.
             </p>
           </section>
         </ScrollFadeIn>
@@ -40,24 +42,24 @@ export function About() {
         <section className="grid md:grid-cols-2 gap-12">
           <ScrollFadeIn direction="left" delay={0.2}>
             <div className="bg-white border border-neutral-200 p-8 shadow-sm">
-              <h2 className="text-2xl font-semibold mb-4 tracking-tight">My Background</h2>
+              <h2 className="text-2xl font-semibold mb-4 tracking-tight">Why I build</h2>
               <p className="text-base text-neutral-600 leading-relaxed mb-4">
-                I come from operations, not just development. I've seen firsthand how good systems make work easier and how bad ones create chaos. That perspective shapes everything I build.
+                Most AI hype is about the technology. I care about the problem. AI is only interesting to me when it eliminates a real workflow bottleneck — hours of manual work, knowledge locked in someone's head, processes that break when one person is unavailable.
               </p>
               <p className="text-base text-neutral-600 leading-relaxed">
-                I focus on property management, real estate operations, and internal business tools because these areas need practical solutions more than polish.
+                I build because there are operational problems that deserve better tools than what currently exists, and because AI has reached a point where building those tools is actually feasible without a team of twenty.
               </p>
             </div>
           </ScrollFadeIn>
 
           <ScrollFadeIn direction="right" delay={0.2}>
             <div className="bg-white border border-neutral-200 p-8 shadow-sm">
-              <h2 className="text-2xl font-semibold mb-4 tracking-tight">Why AI + No-Code</h2>
+              <h2 className="text-2xl font-semibold mb-4 tracking-tight">How I think</h2>
               <p className="text-base text-neutral-600 leading-relaxed mb-4">
-                AI and no-code tools let me focus on what matters: understanding the business problem and designing the right system.
+                Product thinking first. I try to understand the user's actual workflow before touching any technology. What decision are they trying to make? What information do they need? What slows them down?
               </p>
               <p className="text-base text-neutral-600 leading-relaxed">
-                This approach means faster builds, easier updates, and systems that can adapt as businesses change. It's practical, not trendy.
+                From there, I work backwards to the simplest AI-native approach that solves it — not the most impressive one, the most useful one. Then I ship it, watch what happens, and improve.
               </p>
             </div>
           </ScrollFadeIn>
@@ -65,24 +67,24 @@ export function About() {
 
         <ScrollFadeIn delay={0.3}>
           <section>
-            <h2 className="text-3xl font-semibold mb-8 tracking-tight">What Makes My Approach Different</h2>
+            <h2 className="text-3xl font-semibold mb-8 tracking-tight">Principles I build by</h2>
             <StaggerContainer className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  title: "Workflows First",
-                  description: "I start with workflows, not features. I map how the business actually operates before building anything."
+                  title: "Understand before you build",
+                  description: "The worst products are built by people who never talked to users. I map real workflows before writing a single line."
                 },
                 {
-                  title: "Designed for Clarity",
-                  description: "If a user has to think hard about how to use it, it's not done right. Clarity is non-negotiable."
+                  title: "AI as the core, not the feature",
+                  description: "An AI badge on a traditional product is a marketing move. I design around what the model can actually do — that's an AI product."
                 },
                 {
-                  title: "Built to Scale",
-                  description: "Multi-user, multi-company, role-based — all the structure businesses need as they grow."
+                  title: "Ship early, improve always",
+                  description: "A working version in someone's hands is worth more than a perfect version on a whiteboard. Feedback is the real roadmap."
                 },
                 {
-                  title: "Data Visibility",
-                  description: "Good reporting isn't a bonus feature — it's essential. Systems need to show what's happening."
+                  title: "Simplicity is a product decision",
+                  description: "If users need a tutorial to get started, the product failed. Clarity is not an aesthetic choice — it's a functional one."
                 }
               ].map((item, index) => (
                 <StaggerItem key={index}>
@@ -98,18 +100,24 @@ export function About() {
 
         <ScrollFadeIn delay={0.4}>
           <section className="bg-white border border-neutral-200 p-10 shadow-sm">
-            <h2 className="text-3xl font-semibold mb-6 tracking-tight">What I'm Working On</h2>
+            <h2 className="text-3xl font-semibold mb-6 tracking-tight">What I'm working on</h2>
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold mb-3">POD (Property Operations Dashboard)</h3>
+                <h3 className="text-xl font-semibold mb-3">The Scribe</h3>
                 <p className="text-base text-neutral-600 leading-relaxed">
-                  A system built for property managers and real estate teams. It handles properties, tenants, maintenance, reporting, and subscriptions in one platform.
+                  An AI writing platform for Christian authors and ministry leaders. It captures a writer's voice through a guided interview, then produces manuscripts, devotionals, and books that sound authentically like them — grounded in Scripture and theological resources.
                 </p>
               </div>
               <div className="pt-4 border-t border-neutral-200">
-                <h3 className="text-xl font-semibold mb-3">Operational Automation</h3>
+                <h3 className="text-xl font-semibold mb-3">AI agents and local LLMs</h3>
                 <p className="text-base text-neutral-600 leading-relaxed">
-                  Exploring more automation and AI integrations for operational workflows — anything that reduces repetitive tasks and gives teams better control.
+                  Experimenting with autonomous workflows and local model deployments — exploring where AI agents can replace repeated human decisions without losing reliability.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-neutral-200">
+                <h3 className="text-xl font-semibold mb-3">Rapid prototyping</h3>
+                <p className="text-base text-neutral-600 leading-relaxed">
+                  Participating in AI hackathons and building fast MVPs to sharpen the speed at which I can go from problem to working product.
                 </p>
               </div>
             </div>
@@ -118,16 +126,16 @@ export function About() {
 
         <ScrollFadeIn delay={0.5}>
           <section className="bg-neutral-50 border border-neutral-200 p-10">
-            <h2 className="text-3xl font-semibold mb-6 tracking-tight">My Philosophy</h2>
+            <h2 className="text-3xl font-semibold mb-6 tracking-tight">My philosophy</h2>
             <div className="space-y-4">
               <p className="text-lg text-neutral-700 leading-relaxed">
-                I care more about systems working than looking fancy.
+                I'm not trying to build the most technically impressive AI product. I'm trying to build the most useful one.
               </p>
               <p className="text-lg text-neutral-700 leading-relaxed">
-                The best internal tool is the one people actually use without training.
+                The best AI tools are invisible — they just remove friction. You stop noticing the tool and start noticing how much time you have back.
               </p>
               <p className="text-lg text-neutral-700 leading-relaxed font-medium">
-                If you need something built right, with real operational thinking behind it, I'm your person.
+                If you have a real problem that AI can solve, and you want someone who thinks about products before they think about technology, I'd like to talk.
               </p>
             </div>
           </section>
@@ -135,15 +143,14 @@ export function About() {
 
         <ScrollFadeIn delay={0.6}>
           <section className="bg-neutral-900 text-white p-12 -mx-8 relative overflow-hidden">
-            {/* Decorative element */}
             <div className="absolute bottom-10 right-10 opacity-10">
               <DecorativeCircle size={150} color="bg-white" />
             </div>
-            
+
             <div className="relative z-10">
-              <h3 className="text-3xl font-semibold mb-6 tracking-tight">Let's Work Together</h3>
+              <h3 className="text-3xl font-semibold mb-6 tracking-tight">Let's build something</h3>
               <p className="text-lg text-neutral-300 mb-10 leading-relaxed max-w-2xl">
-                If you're looking for someone who understands both business operations and system design, let's talk.
+                I work with founders and teams at the idea-to-product stage. If you want someone who can think through the problem, design the AI approach, and ship it — reach out.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <BeamButton
@@ -158,12 +165,6 @@ export function About() {
                   variant="outline"
                 >
                   WhatsApp
-                </BeamButton>
-                <BeamButton
-                  href="https://demo.podsystem.ng"
-                  variant="outline"
-                >
-                  View Demo
                 </BeamButton>
               </div>
             </div>

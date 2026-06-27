@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink, ShoppingBag, Mail, MessageSquare } from 'lucide-react';
+import { ArrowRight, ExternalLink, ShoppingBag, Mail, MessageSquare, BookOpen, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { RequestAccessModal } from '@/app/components/RequestAccessModal';
 import { DashboardMockup } from '@/app/components/DashboardMockup';
@@ -13,6 +13,48 @@ import {
 export function Projects() {
   const [showAccessModal, setShowAccessModal] = useState(false);
   const projects = [
+    {
+      title: 'The Scribe',
+      description: 'An AI-native writing platform built for Christian authors, pastors, apostolic and prophetic voices, and ministry leaders. The Scribe captures a writer\'s unique voice through a guided interview process, then produces manuscripts, devotionals, Bible studies, and full-length books that sound authentically like them — grounded in Scripture and theological resources.',
+      features: [
+        'Voice DNA — captures the author\'s tone, style, and theological perspective through a guided interview',
+        'Scripture-grounded research and integrated theological resources',
+        'Sermon manuscripts, devotionals, Bible studies, and full book drafts',
+        'AI writing workflows designed for the iterative ministry writing process',
+        'Long-form content structure — chapters, outlines, section drafts',
+        'Personalized output that sounds like the author, not a generic AI',
+        'Designed for non-technical writers — zero friction from idea to draft',
+        'Iterative refinement until the output matches the author\'s voice and intent'
+      ],
+      techStack: ['LLMs', 'RAG', 'Prompt Engineering', 'React', 'TypeScript', 'Vercel'],
+      demo: 'https://thescribeai.vercel.app',
+      status: 'Live',
+      tag: 'AI Writing Platform',
+      requiresAccess: false,
+      icon: 'book',
+      ctaText: 'The Scribe is an AI-native product designed around a specific user — the ministry writer who knows what they want to say but needs intelligent help turning it into structured, publishable content.'
+    },
+    {
+      title: 'Nonfiction AI',
+      description: 'An AI-assisted platform designed specifically for the long-form nonfiction writing process. Unlike general AI writing tools optimised for short content, Nonfiction AI is built around the structure and workflow of books — research, outlining, chapter drafting, and iterative refinement in one coherent environment.',
+      features: [
+        'Long-form structure management — chapters, outlines, and section organisation',
+        'AI-assisted drafting tuned for nonfiction tone and argument structure',
+        'Research integration and source-aware writing workflows',
+        'Designed for books, not blog posts — handles 10,000–100,000+ word projects',
+        'Iterative writing and revision with context persistence across sessions',
+        'Chapter-level AI suggestions that stay coherent with the full manuscript',
+        'Clean, distraction-free writing environment',
+        'Export and formatting for publishing-ready output'
+      ],
+      techStack: ['LLMs', 'React', 'TypeScript', 'Vercel'],
+      demo: 'https://nonfictionai.vercel.app/',
+      status: 'Live',
+      tag: 'AI Writing Platform',
+      requiresAccess: false,
+      icon: 'text',
+      ctaText: 'Nonfiction AI is a purpose-built writing environment for authors tackling long-form projects — where context, structure, and coherence across chapters are as important as sentence-level quality.'
+    },
     {
       title: 'POD (Property Operations Dashboard)',
       description: 'A comprehensive multi-tenant internal system for property managers and real estate teams. Handles properties, tenants, rent collection, maintenance workflows, and operational reporting in one unified platform.',
@@ -129,7 +171,7 @@ export function Projects() {
         <div className="mb-16">
           <h1 className="text-5xl font-semibold mb-6 tracking-tight">Projects</h1>
           <p className="text-xl text-neutral-600 leading-relaxed max-w-2xl">
-            Real internal systems built to solve operational challenges
+            AI-native products and platforms built to solve real problems — each one started from a workflow that was broken and deserved better.
           </p>
         </div>
       </ScrollFadeIn>
@@ -355,9 +397,9 @@ export function Projects() {
       {/* More Projects Coming */}
       <ScrollFadeIn delay={0.4}>
         <div className="mt-20 bg-neutral-50 border border-neutral-200 p-12 text-center rounded-xl">
-          <h3 className="text-2xl font-semibold mb-4 tracking-tight">More Projects Coming Soon</h3>
+          <h3 className="text-2xl font-semibold mb-4 tracking-tight">More coming</h3>
           <p className="text-base text-neutral-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            I'm continuously building and refining internal systems. Check back for updates or reach out to discuss your project.
+            I'm continuously shipping new AI products and iterating on existing ones. Check back for updates or reach out if you want to collaborate on something.
           </p>
           <BeamButton
             href="mailto:Adewunmi@podsystem.ng"
