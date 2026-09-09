@@ -1,11 +1,15 @@
 import { UMAMI_ORIGIN } from "@/lib/umami";
+import { config } from "@/data/config";
 
-const OWN = new Set([
-  "localhost",
-  "127.0.0.1",
-  "nareshkhatri.dev",
-  "www.nareshkhatri.dev",
-]);
+const siteHost = (() => {
+  try {
+    return new URL(config.site).hostname;
+  } catch {
+    return "";
+  }
+})();
+
+const OWN = new Set(["localhost", "127.0.0.1", siteHost]);
 
 const ok = () => new Response(null, { status: 204 });
 
@@ -22,7 +26,8 @@ export async function POST(req: Request) {
   }
 
   if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host)) return ok();
-  if (OWN.has(host) || host.endsWith(".nareshkhatri.dev")) return ok();
+  if (OWN.has(host) || (siteHost !== "" && host.endsWith(`.${siteHost}`)))
+    return ok();
 
   // Origin is browser-set, so it corroborates the reported host
   const origin = req.headers.get("origin") ?? "";

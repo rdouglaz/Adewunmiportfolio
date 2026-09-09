@@ -1,45 +1,46 @@
 const config = {
-  title: "Naresh Khatri | Full-Stack Developer",
+  title: "Adewunmi Saliu | AI Product Builder",
   description: {
-    long: "Explore the portfolio of Naresh, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and innovative projects. Discover my latest work, including Coding Ducks, The Booking Desk, Ghostchat, and more. Let's build something amazing together!",
+    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products through product thinking, AI workflows, rapid prototyping, and execution.",
     short:
-      "Discover the portfolio of Naresh, a full-stack developer creating interactive web experiences and innovative projects.",
+      "Adewunmi Saliu — AI Product Builder. Building AI products people actually use.",
   },
   keywords: [
-    "Naresh",
-    "portfolio",
-    "full-stack developer",
-    "creative technologist",
-    "web development",
-    "3D animations",
-    "interactive websites",
-    "Coding Ducks",
-    "The Booking Desk",
-    "Ghostchat",
-    "web design",
-    "GSAP",
+    "Adewunmi Saliu",
+    "AI Product Builder",
+    "AI products",
+    "product strategy",
+    "LLM integration",
+    "prompt engineering",
+    "RAG systems",
+    "AI workflow design",
+    "rapid prototyping",
+    "founder",
     "React",
     "Next.js",
-    "Spline",
-    "Framer Motion",
+    "AI-native products",
+    "knowledge systems",
   ],
-  author: "Naresh Khatri",
-  email: "naresh.khatri2345@gmail.com",
-  site: "https://nareshkhatri.dev",
+  author: "Adewunmi Saliu",
+  tagline: "Build AI products people actually use.",
+  location: "Lagos, Nigeria",
+  // TODO: replace with your real email address — the contact form sends to this.
+  email: "your-email@example.com",
+  // TODO: replace with your real site URL once you have a domain.
+  site: "https://adewunmisaliu.dev",
 
-  // for github stars button
-  githubUsername: "naresh-khatri",
-  githubRepo: "3d-portfolio",
+  // for github stars button — left empty until you add your repo.
+  githubUsername: "",
+  githubRepo: "",
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://x.com/nothotchaddi",
-    linkedin: "https://www.linkedin.com/in/naresh-khatri/",
-    instagram: "https://www.instagram.com/hotchaddi",
-    facebook: "https://www.facebook.com/HotChaddi/",
-    github: "https://github.com/Naresh-Khatri",
+    // TODO: replace these placeholders with your real profile URLs.
+    twitter: "https://x.com/your-handle",
+    linkedin: "https://www.linkedin.com/in/your-handle",
+    github: "https://github.com/your-username",
   },
 };
 export { config };

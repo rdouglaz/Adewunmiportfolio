@@ -2,145 +2,129 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { File, Github, Linkedin } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { usePreloader } from "../preloader";
-import { BlurIn, BoxReveal } from "../reveal-animations";
-import ScrollDownIcon from "../scroll-down-icon";
+import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
 import { config } from "@/data/config";
 
 import SectionWrapper from "../ui/section-wrapper";
+import { usePreloader } from "../preloader";
+import { BlurIn, BoxReveal } from "../reveal-animations";
+import ScrollDownIcon from "../scroll-down-icon";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
 
   return (
-    <SectionWrapper id="hero" className={cn("relative w-full h-screen")}>
+    <SectionWrapper id="hero" className={cn("relative w-full min-h-screen")}>
       <div className="grid md:grid-cols-2">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "min-h-[calc(100dvh-3rem)] md:min-h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
             "pt-28 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
           )}
         >
           {!isLoading && (
-            <div className="flex flex-col">
-              <div>
-                <BlurIn delay={0.7}>
-                  <p
-                    className={cn(
-                      "md:self-start mt-4 font-medium text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
-                    )}
-                  >
-                    Hi, I am
-                    <br className="md:hidden" />
-                  </p>
-                </BlurIn>
+            <div className="flex flex-col max-w-xl">
+              <BlurIn delay={0.7}>
+                <p className="md:self-start mt-4 font-medium text-sm sm:text-base md:text-lg text-slate-500 dark:text-zinc-400 cursor-default">
+                  {config.author} — AI Product Builder
+                </p>
+              </BlurIn>
 
-                <BlurIn delay={1}>
-                  <Tooltip delayDuration={300}>
-                    <TooltipTrigger asChild>
-                      <h1
-                        className={cn(
-                          "-ml-[6px] leading-none text-transparent text-slate-800 text-left",
-                          "font-bold text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
-                          "cursor-default text-edge-outline font-display "
-                        )}
-                      >
-                        {config.author.split(" ")[0]}
-                        <br className="md:block hiidden" />
-                        {config.author.split(" ")[1]}
-                      </h1>
-                    </TooltipTrigger>
-                    <TooltipContent
-                      side="top"
-                      className="dark:bg-white dark:text-black"
-                    >
-                      theres something waiting for you in devtools
-                    </TooltipContent>
-                  </Tooltip>
-                </BlurIn>
-                {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
-                <BlurIn delay={1.2}>
-                  <p
-                    className={cn(
-                      "md:self-start md:mt-4 font-medium text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
-                    )}
-                  >
-                    A Full Stack Web Developer
-                  </p>
-                </BlurIn>
-              </div>
-              <div className="mt-8 flex flex-col gap-3 w-fit">
-                <Link
-                  href={
-                    "https://drive.google.com/file/d/1MTSsUA8V7Po2AsNXT8kZ5sLOpzC8l7qm/view?usp=sharing"
-                  }
-                  target="_blank"
-                  className="flex-1"
+              <BlurIn delay={1}>
+                <h1
+                  className={cn(
+                    "mt-3 font-display font-bold cursor-default",
+                    "text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05]",
+                    "text-slate-900 dark:text-white text-center md:text-left"
+                  )}
                 >
-                  <BoxReveal delay={2} width="100%" >
-                    <Button className="flex items-center gap-2 w-full">
-                      <File size={24} />
-                      <p>Resume</p>
+                  Build AI products{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-sky-400 dark:from-blue-400 dark:to-sky-300">
+                    people actually use.
+                  </span>
+                </h1>
+              </BlurIn>
+
+              <BlurIn delay={1.2}>
+                <p className="mt-5 text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-zinc-400 cursor-default text-center md:text-left">
+                  {config.description.long}
+                </p>
+              </BlurIn>
+
+              <BlurIn delay={1.35}>
+                <p className="mt-4 flex items-center justify-center md:justify-start gap-1.5 text-xs sm:text-sm text-slate-500 dark:text-zinc-500">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  {config.location}
+                </p>
+              </BlurIn>
+
+              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-fit">
+                <BoxReveal delay={1.6} width="100%">
+                  <Link href="#projects" className="block">
+                    <Button className="w-full sm:w-auto gap-2 bg-blue-600 hover:bg-blue-500 text-white dark:bg-blue-500 dark:hover:bg-blue-400 dark:text-white">
+                      View My Work
+                      <ArrowDown size={18} aria-hidden="true" />
                     </Button>
-                  </BoxReveal>
-                </Link>
-                <div className="md:self-start flex gap-3">
-                  <Tooltip delayDuration={300}>
-                    <TooltipTrigger asChild>
-                      <Link href={"#contact"}>
-                        <Button
-                          variant={"outline"}
-                          className="block w-full overflow-hidden"
-                        >
-                          Hire Me
-                        </Button>
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom">
-                      <p>pls 🥹 🙏</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  <div className="flex items-center h-full gap-2">
-                    <Link
-                      href={config.social.twitter}
-                      target="_blank"
+                  </Link>
+                </BoxReveal>
+                <BoxReveal delay={1.75} width="100%">
+                  <Link href="#contact" className="block">
+                    <Button
+                      variant="outline"
+                      className="w-full sm:w-auto gap-2 border-blue-600/40 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-300"
                     >
-                      <Button variant={"outline"}>
-                        <SiX size={24} />
-                      </Button>
-                    </Link>
-                    <Link
-                      href={config.social.github}
-                      target="_blank"
-                      className="cursor-can-hover"
-                    >
-                      <Button variant={"outline"}>
-                        <SiGithub size={24} />
-                      </Button>
-                    </Link>
-                    <Link
-                      href={config.social.linkedin}
-                      target="_blank"
-                      className="cursor-can-hover"
-                    >
-                      <Button variant={"outline"}>
-                        <SiLinkedin size={24} />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+                      Let&apos;s Talk
+                      <ArrowRight size={18} aria-hidden="true" />
+                    </Button>
+                  </Link>
+                </BoxReveal>
               </div>
+
+              <BlurIn delay={1.9}>
+                <div className="mt-6 flex items-center justify-center md:justify-start gap-2">
+                  <Link
+                    href={config.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Adewunmi Saliu on X (Twitter)"
+                  >
+                    <Button variant="outline" size="icon" aria-label="X profile">
+                      <SiX size={18} />
+                    </Button>
+                  </Link>
+                  <Link
+                    href={config.social.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Adewunmi Saliu on GitHub"
+                  >
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      aria-label="GitHub profile"
+                    >
+                      <SiGithub size={18} />
+                    </Button>
+                  </Link>
+                  <Link
+                    href={config.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Adewunmi Saliu on LinkedIn"
+                  >
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      aria-label="LinkedIn profile"
+                    >
+                      <SiLinkedin size={18} />
+                    </Button>
+                  </Link>
+                </div>
+              </BlurIn>
             </div>
           )}
         </div>

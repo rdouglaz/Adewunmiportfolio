@@ -1,31 +1,40 @@
-// thoda zada ts ho gya idhar
+// Skill catalogue for Adewunmi Saliu.
+//
+// IMPORTANT — the 3D keyboard contract: each enum VALUE (e.g. "js") must match
+// an object name inside public/assets/skills-keyboard.spline. The Spline scene
+// is a fixed binary, so values are stable technical keys; only the displayed
+// label / description / color / icon change. `findObjectByName(skill.name)`
+// in animated-background.tsx depends on this — do not rename values.
 export enum SkillNames {
-  JS = "js",
-  TS = "ts",
-  HTML = "html",
-  CSS = "css",
-  REACT = "react",
-  VUE = "vue",
-  NEXTJS = "nextjs",
-  TAILWIND = "tailwind",
-  NODEJS = "nodejs",
-  EXPRESS = "express",
-  POSTGRES = "postgres",
-  MONGODB = "mongodb",
-  GIT = "git",
-  GITHUB = "github",
-  PRETTIER = "prettier",
-  NPM = "npm",
-  FIREBASE = "firebase",
-  WORDPRESS = "wordpress",
-  LINUX = "linux",
-  DOCKER = "docker",
-  NGINX = "nginx",
-  AWS = "aws",
-  GCP = "gcp",
-  VIM = "vim",
-  VERCEL = "vercel",
+  PRODUCT_STRATEGY = "js",
+  USER_RESEARCH = "ts",
+  RAPID_PROTOTYPING = "html",
+  PRODUCT_DESIGN = "css",
+  GO_TO_MARKET = "react",
+  LLM_INTEGRATION = "vue",
+  PROMPT_ENGINEERING = "nextjs",
+  RAG_SYSTEMS = "tailwind",
+  AI_WORKFLOW_DESIGN = "nodejs",
+  VOICE_KNOWLEDGE_SYSTEMS = "express",
+  AI_AUTOMATION = "git",
+  KNOWLEDGE_BASES = "github",
+  AI_WRITING_SYSTEMS = "npm",
+  REACT_NEXTJS = "postgres",
+  TYPESCRIPT = "mongodb",
+  VERCEL = "prettier",
+  API_DESIGN = "firebase",
+  DATABASE_DESIGN = "wordpress",
+  NOCODE_PLATFORMS = "linux",
+  API_INTEGRATIONS = "docker",
+  CRM_INTEGRATIONS = "nginx",
+  FOUNDER_MINDSET = "aws",
+  OPERATIONS = "gcp",
+  MULTITENANT_ARCHITECTURE = "vim",
+  SUBSCRIPTION_SYSTEMS = "vercel",
 }
+
+export type SkillCategory = "Product" | "AI" | "Technical" | "Business";
+
 export type Skill = {
   id: number;
   name: string;
@@ -33,275 +42,247 @@ export type Skill = {
   shortDescription: string;
   color: string;
   icon: string;
+  category: SkillCategory;
 };
+
+// Brand icons come from devicons; abstract capability icons come from
+// lucide-static (pinned to the installed lucide-react version).
+const lucide = (name: string) =>
+  `https://cdn.jsdelivr.net/npm/lucide-static@0.416.0/icons/${name}.svg`;
+
 export const SKILLS: Record<SkillNames, Skill> = {
-  [SkillNames.JS]: {
+  [SkillNames.PRODUCT_STRATEGY]: {
     id: 1,
     name: "js",
-    label: "JavaScript",
-    shortDescription: "yeeting code into the DOM since '95, no cap! 💯🚀",
-    color: "#f0db4f",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    label: "Product Strategy",
+    shortDescription: "Finding the smallest valuable thing to build first — then sequencing what comes next.",
+    color: "#3B82F6",
+    icon: lucide("target"),
+    category: "Product",
   },
-  [SkillNames.TS]: {
+  [SkillNames.USER_RESEARCH]: {
     id: 2,
     name: "ts",
-    label: "TypeScript",
-    shortDescription:
-      "JavaScript's overachieving cousin who's always flexing 💯🔒",
-    color: "#007acc",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    label: "User Research",
+    shortDescription: "Talking to real users and turning messy feedback into clear product decisions.",
+    color: "#60A5FA",
+    icon: lucide("users"),
+    category: "Product",
   },
-  [SkillNames.HTML]: {
+  [SkillNames.RAPID_PROTOTYPING]: {
     id: 3,
     name: "html",
-    label: "HTML",
-    shortDescription: "the internet's granddad,  still bussin' fr fr! 💀🔥",
-    color: "#e34c26",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    label: "Rapid Prototyping",
+    shortDescription: "From idea to something clickable in days, not quarters.",
+    color: "#818CF8",
+    icon: lucide("zap"),
+    category: "Product",
   },
-  [SkillNames.CSS]: {
+  [SkillNames.PRODUCT_DESIGN]: {
     id: 4,
     name: "css",
-    label: "CSS",
-    shortDescription: "styling with the ultimate drip, no cap 💁‍♂️🔥",
-    color: "#563d7c",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    label: "Product Design",
+    shortDescription: "Clean, calm interfaces for complex AI-powered workflows.",
+    color: "#A78BFA",
+    icon: lucide("pen-tool"),
+    category: "Product",
   },
-  [SkillNames.REACT]: {
+  [SkillNames.GO_TO_MARKET]: {
     id: 5,
     name: "react",
-    label: "React",
-    shortDescription: `"use using" 
-using use = useUsing("use")`,
-    color: "#61dafb",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    label: "Go-to-Market",
+    shortDescription: "Positioning, launch sequencing, and getting v1 into users' hands.",
+    color: "#38BDF8",
+    icon: lucide("rocket"),
+    category: "Product",
   },
-  [SkillNames.VUE]: {
+  [SkillNames.LLM_INTEGRATION]: {
     id: 6,
     name: "vue",
-    label: "Vue",
-    shortDescription:
-      "the chill pill for your frontend, it hits different! 🟢😌",
-    color: "#41b883",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+    label: "LLM Integration",
+    shortDescription: "Wiring frontier models into production features — reliably, not as demos.",
+    color: "#2563EB",
+    icon: lucide("brain"),
+    category: "AI",
   },
-  [SkillNames.NEXTJS]: {
+  [SkillNames.PROMPT_ENGINEERING]: {
     id: 7,
     name: "nextjs",
-    label: "Next.js",
-    shortDescription:
-      "the drama queen of front-end frameworks, and we stan! 👑📜",
-    color: "#fff",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    label: "Prompt Engineering",
+    shortDescription: "Structured prompts, evals, and guardrails that make model output dependable.",
+    color: "#0EA5E9",
+    icon: lucide("terminal"),
+    category: "AI",
   },
-  [SkillNames.TAILWIND]: {
+  [SkillNames.RAG_SYSTEMS]: {
     id: 8,
     name: "tailwind",
-    label: "Tailwind",
-    shortDescription: "utility classes hitting different fr fr 🌪️🔥",
-    color: "#38bdf8",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+    label: "RAG Systems",
+    shortDescription: "Grounding LLMs in your documents so answers stay accurate and sourced.",
+    color: "#06B6D4",
+    icon: lucide("database"),
+    category: "AI",
   },
-  [SkillNames.NODEJS]: {
+  [SkillNames.AI_WORKFLOW_DESIGN]: {
     id: 9,
     name: "nodejs",
-    label: "Node.js",
-    shortDescription: "JavaScript said 'sike, I'm backend now', deadass! 🔙🔚",
-    color: "#6cc24a",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    label: "AI Workflow Design",
+    shortDescription: "Multi-step AI pipelines — human-in-the-loop where it matters, automated where it doesn't.",
+    color: "#3B82F6",
+    icon: lucide("workflow"),
+    category: "AI",
   },
-  [SkillNames.EXPRESS]: {
+  [SkillNames.VOICE_KNOWLEDGE_SYSTEMS]: {
     id: 10,
     name: "express",
-    label: "Express",
-    shortDescription: "middlewares go dummy hard, no cap! 🚂💨",
-    color: "#fff",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+    label: "Voice & Knowledge Systems",
+    shortDescription: "Capturing how someone sounds and knows — then scaling it with AI.",
+    color: "#6366F1",
+    icon: lucide("mic"),
+    category: "AI",
   },
-  [SkillNames.POSTGRES]: {
+  [SkillNames.AI_AUTOMATION]: {
     id: 11,
-    name: "postgres",
-    label: "PostgreSQL",
-    shortDescription: "SQL but make it fashion, purr 💅🐘",
-    color: "#336791",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-  },
-  [SkillNames.MONGODB]: {
-    id: 12,
-    name: "mongodb",
-    label: "MongoDB",
-    shortDescription: "flexin' with that NoSQL drip, respectfully! 💪🍃",
-    color: "#336791",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-  },
-  [SkillNames.GIT]: {
-    id: 13,
     name: "git",
-    label: "Git",
-    shortDescription: "the code's personal bodyguard, no cap! 🕵️‍♂️🔄",
-    color: "#f1502f",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+    label: "AI Automation",
+    shortDescription: "Removing repetitive operational work with agentic, event-driven automation.",
+    color: "#14B8A6",
+    icon: lucide("bot"),
+    category: "AI",
   },
-  [SkillNames.GITHUB]: {
-    id: 14,
+  [SkillNames.KNOWLEDGE_BASES]: {
+    id: 12,
     name: "github",
-    label: "GitHub",
-    shortDescription: "sliding into those pull requests, IYKYK! 🐙",
-    color: "#000000",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+    label: "Knowledge Bases",
+    shortDescription: "Structured, searchable knowledge stores that power AI answers and research.",
+    color: "#8B5CF6",
+    icon: lucide("book-open"),
+    category: "AI",
   },
-  [SkillNames.PRETTIER]: {
-    id: 15,
-    name: "prettier",
-    label: "Prettier",
-    shortDescription: "making your code not a whole mess, thank u next 🧹✨",
-    color: "#f7b93a",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prettier/prettier-original.svg",
-  },
-  [SkillNames.NPM]: {
-    id: 16,
+  [SkillNames.AI_WRITING_SYSTEMS]: {
+    id: 13,
     name: "npm",
-    label: "NPM",
-    shortDescription: "package manager said 'I gotchu fam', period! 📦💯",
-    color: "#fff",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg",
+    label: "AI Writing Systems",
+    shortDescription: "Long-form writing workflows — research, outline, draft, and edit in one loop.",
+    color: "#0EA5E9",
+    icon: lucide("pen-line"),
+    category: "AI",
   },
-  [SkillNames.FIREBASE]: {
-    id: 17,
-    name: "firebase",
-    label: "Firebase",
-    shortDescription:
-      "your app's ultimate wingman, but watch out, vendor lock-in vibes! 🔥👌",
-    color: "#ffca28",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+  [SkillNames.REACT_NEXTJS]: {
+    id: 14,
+    name: "postgres",
+    label: "React / Next.js",
+    shortDescription: "The app layer — fast, server-rendered product experiences.",
+    color: "#61dafb",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    category: "Technical",
   },
-  [SkillNames.WORDPRESS]: {
-    id: 18,
-    name: "wordpress",
-    label: "WordPress",
-    shortDescription: "the grandpa of CMS, still rocking that cane 🧓👴",
+  [SkillNames.TYPESCRIPT]: {
+    id: 15,
+    name: "mongodb",
+    label: "TypeScript",
+    shortDescription: "End-to-end type safety from database to UI.",
     color: "#007acc",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg",
-  },
-  [SkillNames.LINUX]: {
-    id: 19,
-    name: "linux",
-    label: "Linux",
-    shortDescription: "where 'chmod 777' is the ultimate flex 🔓🙌",
-    color: "#fff",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
-  },
-  [SkillNames.DOCKER]: {
-    id: 20,
-    name: "docker",
-    label: "Docker",
-    shortDescription: "The best containerization! 🐳🔥",
-    color: "#2496ed",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-  },
-  [SkillNames.NGINX]: {
-    id: 21,
-    name: "nginx",
-    label: "NginX",
-    shortDescription: "reverse proxy go zoom zoom, sheesh! 🚗💨",
-    color: "#008000",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg",
-  },
-  [SkillNames.AWS]: {
-    id: 22,
-    name: "aws",
-    label: "AWS",
-    shortDescription:
-      "always extra, making everything more complicated, period! 🌐👨‍💻",
-    color: "#ff9900",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aws/aws-original.svg",
-  },
-  [SkillNames.GCP]: {
-    id: 25,
-    name: "gcp",
-    label: "Google Cloud",
-    shortDescription:
-      "cloud computing but make it Google vibes, living rent free! ☁️🔥",
-    color: "#4285f4",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
-  },
-  [SkillNames.VIM]: {
-    id: 23,
-    name: "vim",
-    label: "Vim",
-    shortDescription: "exit? In this economy? Ight, imma head out! 🚪🏃",
-    color: "#e34c26",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vim/vim-original.svg",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    category: "Technical",
   },
   [SkillNames.VERCEL]: {
-    id: 24,
-    name: "vercel",
+    id: 16,
+    name: "prettier",
     label: "Vercel",
-    shortDescription:
-      "The triangle compony, helps you deploy and go touch grass! 🚀🌿",
-    color: "#6cc24a",
+    shortDescription: "Preview-per-commit deploys and edge-fast global delivery.",
+    color: "#e8e8e8",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+    category: "Technical",
+  },
+  [SkillNames.API_DESIGN]: {
+    id: 17,
+    name: "firebase",
+    label: "API Design",
+    shortDescription: "Clean, versioned contracts between AI services, apps, and integrations.",
+    color: "#3B82F6",
+    icon: lucide("braces"),
+    category: "Technical",
+  },
+  [SkillNames.DATABASE_DESIGN]: {
+    id: 18,
+    name: "wordpress",
+    label: "Database Design",
+    shortDescription: "Schemas that model the real business — multi-tenant from day one.",
+    color: "#38BDF8",
+    icon: lucide("server"),
+    category: "Technical",
+  },
+  [SkillNames.NOCODE_PLATFORMS]: {
+    id: 19,
+    name: "linux",
+    label: "No-Code Platforms",
+    shortDescription: "Shipping internal tools at no-code speed, hardened with AI automation.",
+    color: "#A78BFA",
+    icon: lucide("blocks"),
+    category: "Technical",
+  },
+  [SkillNames.API_INTEGRATIONS]: {
+    id: 20,
+    name: "docker",
+    label: "API Integrations",
+    shortDescription: "Connecting CRMs, payment rails, and third-party tools into one system.",
+    color: "#60A5FA",
+    icon: lucide("link"),
+    category: "Technical",
+  },
+  [SkillNames.CRM_INTEGRATIONS]: {
+    id: 21,
+    name: "nginx",
+    label: "CRM Integrations",
+    shortDescription: "Two-way sync between products and the CRM the business already runs on.",
+    color: "#818CF8",
+    icon: lucide("messages-square"),
+    category: "Technical",
+  },
+  [SkillNames.FOUNDER_MINDSET]: {
+    id: 22,
+    name: "aws",
+    label: "Founder Mindset",
+    shortDescription: "Owning outcomes end-to-end — strategy, shipping, and everything between.",
+    color: "#F59E0B",
+    icon: lucide("crown"),
+    category: "Business",
+  },
+  [SkillNames.OPERATIONS]: {
+    id: 23,
+    name: "gcp",
+    label: "Operations",
+    shortDescription: "Turning spreadsheets and chaos into systems the whole team can run.",
+    color: "#94A3B8",
+    icon: lucide("settings"),
+    category: "Business",
+  },
+  [SkillNames.MULTITENANT_ARCHITECTURE]: {
+    id: 24,
+    name: "vim",
+    label: "Multi-tenant Architecture",
+    shortDescription: "One platform, many companies — isolated data with role-based access.",
+    color: "#3B82F6",
+    icon: lucide("building-2"),
+    category: "Business",
+  },
+  [SkillNames.SUBSCRIPTION_SYSTEMS]: {
+    id: 25,
+    name: "vercel",
+    label: "Subscription Systems",
+    shortDescription: "Plans, billing, and access control that grow with the customer base.",
+    color: "#10B981",
+    icon: lucide("credit-card"),
+    category: "Business",
   },
 };
 
-export type Experience = {
-  id: number;
-  startDate: string;
-  endDate: string;
-  title: string;
-  company: string;
-  description: string[];
-  skills: SkillNames[];
-};
-
-export const EXPERIENCE: Experience[] = [
-  {
-    id: 1,
-    startDate: "Dec 2024",
-    endDate: "Present",
-    title: "Full Stack Developer",
-    company: "OmniNexus Sdn Bhd",
-    description: [
-      "Built a custom image editor from scratch, cutting $4.8k/year in SaaS costs.",
-      "Architected async job queues processing 1k+ AI tasks daily with bulletproof reliability.",
-      "Optimized media delivery pipeline, slashing asset load times by 40%.",
-      "Shipped high-impact features end-to-end from requirements to production.",
-    ],
-    skills: [
-      SkillNames.NEXTJS,
-      SkillNames.TS,
-      SkillNames.REACT,
-      SkillNames.NODEJS,
-      SkillNames.POSTGRES,
-      SkillNames.MONGODB,
-      SkillNames.DOCKER,
-      SkillNames.GCP,
-    ],
-  },
-  {
-    id: 2,
-    startDate: "Apr 2022",
-    endDate: "Dec 2024",
-    title: "Freelance Full Stack Developer",
-    company: "Self-employed",
-    description: [
-      "Transformed chaotic Excel sheets into polished internal tools for various clients.",
-      "Shipped dashboards and custom CMS platforms tailored to each client's workflow.",
-      "Automated repetitive processes, improving efficiency and reducing human error.",
-      "Focused on clean, maintainable code and interfaces that users actually enjoy.",
-    ],
-    skills: [
-      SkillNames.REACT,
-      SkillNames.VUE,
-      SkillNames.NODEJS,
-      SkillNames.EXPRESS,
-      SkillNames.MONGODB,
-      SkillNames.POSTGRES,
-      SkillNames.TAILWIND,
-      SkillNames.WORDPRESS,
-    ],
-  },
+export const SKILL_CATEGORIES: SkillCategory[] = [
+  "Product",
+  "AI",
+  "Technical",
+  "Business",
 ];
 
 export const themeDisclaimers = {
@@ -320,4 +301,3 @@ export const themeDisclaimers = {
     "Dark mode on! Finally, someone who understands true sophistication.",
   ],
 };
-

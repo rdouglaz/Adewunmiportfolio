@@ -1,5 +1,4 @@
-export const UMAMI_SRC =
-  process.env.UMAMI_DOMAIN || "https://umami.nareshkhatri.dev/script.js";
+export const UMAMI_SRC = process.env.UMAMI_DOMAIN || "";
 
 // script url and collect api share an origin. never throw on a malformed
 // UMAMI_DOMAIN — this module is imported by the root layout

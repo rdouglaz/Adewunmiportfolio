@@ -1,15 +1,23 @@
 "use client";
 
 import * as React from "react";
+import { config } from "@/data/config";
 
-const ENDPOINT = "https://nareshkhatri.dev/api/collect";
+const siteHost = (() => {
+  try {
+    return new URL(config.site).hostname;
+  } catch {
+    return "";
+  }
+})();
+const ENDPOINT = "/api/collect";
 const KEY = "portfolio:site";
 
 const isLocal = (h: string) =>
   h === "localhost" ||
   h === "127.0.0.1" ||
-  h === "nareshkhatri.dev" ||
-  h.endsWith(".nareshkhatri.dev");
+  h === siteHost ||
+  (siteHost !== "" && h.endsWith(`.${siteHost}`));
 
 // records the deployment hostname once per browser, so I know where builds run.
 export default function Analytics() {

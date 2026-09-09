@@ -3,8 +3,6 @@ import { config } from "@/data/config";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const rateLimit = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
@@ -33,13 +31,21 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const {
-      success: zodSuccess,
-      data: zodData,
-      error: zodError,
-    } = Email.safeParse(body);
-    if (!zodSuccess)
-      return Response.json({ error: zodError?.message }, { status: 400 });
+    const parsed = Email.safeParse(body);
+    if (!parsed.success)
+      return Response.json({ error: parsed.error?.message }, { status: 400 });
+    const zodData = parsed.data;
+
+    // Lazily constructed so a missing key fails gracefully at request time
+    // (503) instead of crashing the build at module-evaluation time.
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return Response.json(
+        { error: "Email service is not configured yet." },
+        { status: 503 }
+      );
+    }
+    const resend = new Resend(apiKey);
 
     const { data: resendData, error: resendError } = await resend.emails.send({
       from: "Porfolio <onboarding@resend.dev>",
