@@ -3,7 +3,8 @@ import { config } from "@/data/config";
 
 const siteHost = (() => {
   try {
-    return new URL(config.site).hostname;
+    const siteUrl = Array.isArray(config.site) ? config.site[0] : config.site;
+    return new URL(siteUrl).hostname;
   } catch {
     return "";
   }
