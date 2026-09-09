@@ -40,7 +40,7 @@ const config = {
     twitter: "https://x.com/WatchingD_World",
     linkedin: "https://www.linkedin.com/in/adewunmisaliu/",
     // TODO: replace with your real GitHub profile URL.
-    github: "https://github.com/your-username",
+    github: "https://github.com/rdouglaz/Adewunmi",
   },
 };
 export { config };
