@@ -11,7 +11,7 @@ import ContactForm from "../ContactForm";
 import { config } from "@/data/config";
 import { SectionHeader } from "./section-header";
 import SectionWrapper from "../ui/section-wrapper";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, MessageCircle } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -64,6 +64,24 @@ const ContactSection = () => {
                 <p className="text-sm text-muted-foreground">
                   {config.location}
                 </p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/70 dark:bg-black/70 backdrop-blur-sm rounded-xl">
+            <CardContent className="flex items-center gap-4 p-6">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600 dark:text-blue-400">
+                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-sm font-medium">WhatsApp</p>
+                <a
+                  href="https://wa.me/2349067626445"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-muted-foreground underline-offset-4 hover:underline"
+                >
+                  Chat directly
+                </a>
               </div>
             </CardContent>
           </Card>

@@ -1,3 +1,8 @@
+export type ProjectLink = {
+  label: string;
+  href: string;
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -7,6 +12,7 @@ export type Project = {
   approach: string;
   features: string[];
   tech: string[];
+  links: ProjectLink[];
 };
 
 const projects: Project[] = [
@@ -27,6 +33,10 @@ const projects: Project[] = [
       "Bible studies",
     ],
     tech: ["LLMs", "RAG", "React", "Vercel"],
+    links: [
+      { label: "Open App", href: "https://thescribeai.vercel.app" },
+      { label: "Marketing Site", href: "https://thescribe-ai.vercel.app" },
+    ],
   },
   {
     id: "pod-system",
@@ -40,6 +50,7 @@ const projects: Project[] = [
     features: [
       "Multi-company architecture",
       "Role-based access",
+      "Subscription billing",
       "Maintenance workflows",
       "Real-time dashboard",
     ],
@@ -48,6 +59,12 @@ const projects: Project[] = [
       "AI automation",
       "API integrations",
       "Database design",
+    ],
+    links: [
+      { label: "Management App", href: "https://app.podsystem.ng" },
+      { label: "Tenant App", href: "https://tenant.podsystem.ng" },
+      { label: "Marketplace", href: "https://marketplace.podsystem.ng" },
+      { label: "Website", href: "https://podsystem.ng" },
     ],
   },
   {
@@ -63,9 +80,10 @@ const projects: Project[] = [
       "Speaker-labelled transcript",
       "Action items with owners",
       "One-click follow-up email",
-      "CRM sync",
+      "CRM sync (HubSpot / Salesforce)",
     ],
     tech: ["AI / LLM Integration", "React", "TypeScript", "Vercel"],
+    links: [{ label: "Open App", href: "https://meetsummary-one.vercel.app/" }],
   },
   {
     id: "nonfiction-ai",
@@ -82,7 +100,8 @@ const projects: Project[] = [
       "AI-assisted drafting",
       "AI-assisted research",
     ],
-    tech: ["AI writing systems", "Structured workflows"],
+    tech: ["AI writing systems", "LLMs", "React", "Vercel"],
+    links: [{ label: "Open App", href: "https://nonfictionai.vercel.app/" }],
   },
 ];
 

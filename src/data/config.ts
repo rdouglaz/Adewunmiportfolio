@@ -24,8 +24,8 @@ const config = {
   author: "Adewunmi Saliu",
   tagline: "Build AI products people actually use.",
   location: "Lagos, Nigeria",
-  // TODO: replace with your real email address — the contact form sends to this.
-  email: "your-email@example.com",
+  // Contact inbox — the contact form sends to this address via Resend.
+  email: "Adewunmi@podsystem.ng",
   // TODO: replace with your real site URL once you have a domain.
   site: "https://adewunmisaliu.dev",
 
@@ -37,9 +37,9 @@ const config = {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    // TODO: replace these placeholders with your real profile URLs.
-    twitter: "https://x.com/your-handle",
-    linkedin: "https://www.linkedin.com/in/your-handle",
+    twitter: "https://x.com/WatchingD_World",
+    linkedin: "https://www.linkedin.com/in/adewunmisaliu/",
+    // TODO: replace with your real GitHub profile URL.
     github: "https://github.com/your-username",
   },
 };

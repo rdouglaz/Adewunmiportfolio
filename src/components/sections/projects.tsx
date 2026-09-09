@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "motion/react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { cn } from "@/lib/utils";
@@ -123,15 +125,37 @@ const ProjectCard = ({
               ))}
             </ul>
           </div>
-          <div className="mt-auto flex flex-wrap gap-2 border-t border-border/60 pt-4">
-            {project.tech.map((item) => (
-              <span
-                key={item}
-                className="rounded-md bg-secondary/60 px-2.5 py-1 font-mono text-[11px] text-secondary-foreground"
-              >
-                {item}
-              </span>
-            ))}
+          <div className="mt-auto flex flex-col gap-4 border-t border-border/60 pt-4">
+            {project.links.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {project.links.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="group/link inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400">
+                      {link.label}
+                      <ArrowUpRight
+                        className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-md bg-secondary/60 px-2.5 py-1 font-mono text-[11px] text-secondary-foreground"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
