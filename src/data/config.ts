@@ -1,7 +1,7 @@
 const config = {
   title: "Adewunmi Editorial Lab | AI Product Builder",
   description: {
-    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products throu[...]
+    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products through rapid prototyping, strategic thinking, and deep technical execution.",
     short:
       "Adewunmi Saliu — AI Product Builder. Building AI products people actually use.",
   },
@@ -30,7 +30,7 @@ const config = {
   // TODO: replace with your real site URL once you have a domain.
   site: [
     "https://adewunmilab.podsystem.ng",
-    "https://adewunmilab.podsystem.ng",
+    "https://adewunmi.podsystem.ng",
   ],
 
   // for github stars button — left empty until you add your repo.
