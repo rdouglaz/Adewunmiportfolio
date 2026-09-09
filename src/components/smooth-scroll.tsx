@@ -44,9 +44,52 @@ function SmoothScroll({ children, isInsideModal = false }: LenisProps) {
         },
       }}
     >
+      <AnchorScrollHandler />
       {children}
     </ReactLenis>
   );
+}
+
+/**
+ * In-page anchor navigation that Lenis understands.
+ *
+ * Native hash jumps fight Lenis (it owns the scroll position on its own RAF
+ * loop), so plain `href="#projects"` links often do nothing. This intercepts
+ * same-page anchor clicks and routes them through `lenis.scrollTo`, falling
+ * back to native smooth scrolling when Lenis isn't running.
+ */
+function AnchorScrollHandler() {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const anchor = target?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const hash = anchor.getAttribute("href");
+      if (!hash || hash.length < 2) return;
+      // Only handle same-page links.
+      if (anchor.pathname !== window.location.pathname) return;
+      let el: Element | null = null;
+      try {
+        el = document.querySelector(hash);
+      } catch {
+        return;
+      }
+      if (!el) return;
+      e.preventDefault();
+      window.history.replaceState(null, "", hash);
+      if (lenis) {
+        lenis.scrollTo(el as HTMLElement, { offset: -70, duration: 1.6 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [lenis]);
+
+  return null;
 }
 
 export default SmoothScroll;

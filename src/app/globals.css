@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  scroll-behavior: smooth;
-}
+/* NOTE: no `scroll-behavior: smooth` here on purpose — Lenis owns scrolling
+   (see AnchorScrollHandler in smooth-scroll.tsx) and CSS smooth scrolling
+   fights its RAF loop, which is what used to break hash links. */
 
 @layer base {
   :root {
