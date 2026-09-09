@@ -28,7 +28,7 @@ const config = {
   // Contact inbox — the contact form sends to this address via Resend.
   email: "Adewunmi@podsystem.ng",
   // TODO: replace with your real site URL once you have a domain.
-  site: "https://adewunmilab.podsystem.ng https://adewunmilab.podsystem.ng",
+  site: "https://adewunmilab.podsystem.ng, https://adewunmilab.podsystem.ng",
 
   // for github stars button — left empty until you add your repo.
   githubUsername: "",
