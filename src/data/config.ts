@@ -1,7 +1,7 @@
 const config = {
   title: "Adewunmi Editorial Lab | AI Product Builder",
   description: {
-    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products through [...]",
+    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products throu[...]
     short:
       "Adewunmi Saliu — AI Product Builder. Building AI products people actually use.",
   },
@@ -28,7 +28,10 @@ const config = {
   // Contact inbox — the contact form sends to this address via Resend.
   email: "Adewunmi@podsystem.ng",
   // TODO: replace with your real site URL once you have a domain.
-  site: "https://adewunmilab.podsystem.ng",
+  site: [
+    "https://adewunmilab.podsystem.ng",
+    "https://adewunmilab.podsystem.ng",
+  ],
 
   // for github stars button — left empty until you add your repo.
   githubUsername: "",
