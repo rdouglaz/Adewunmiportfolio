@@ -24,9 +24,11 @@ const unbounded = Unbounded({
   display: "swap",
 });
 
+const primarySite = Array.isArray(config.site) ? config.site[0] : config.site;
+
 export const metadata: Metadata = {
   // pins every relative/OG url to the .dev origin so nothing canonicalises back to .site
-  metadataBase: new URL(config.site),
+  metadataBase: new URL(primarySite),
   alternates: { canonical: "./" },
   title: config.title,
   description: config.description.long,
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: config.title,
     description: config.description.short,
-    url: config.site,
+    url: primarySite,
     images: [
       {
         url: config.ogImg,
