@@ -47,8 +47,14 @@ export async function POST(req: Request) {
     }
     const resend = new Resend(apiKey);
 
+    // Must be an address on a domain verified in Resend. The
+    // onboarding@resend.dev test sender only delivers to your own Resend
+    // account email, so it 500s for any real inbox.
+    const from =
+      process.env.RESEND_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>";
+
     const { data: resendData, error: resendError } = await resend.emails.send({
-      from: "Porfolio <onboarding@resend.dev>",
+      from,
       to: [config.email],
       subject: "Contact me from portfolio",
       react: EmailTemplate({
@@ -59,11 +65,19 @@ export async function POST(req: Request) {
     });
 
     if (resendError) {
-      return Response.json({ error: "Failed to send email" }, { status: 500 });
+      console.error("[send] resend error:", resendError);
+      return Response.json(
+        { error: resendError.message || "Failed to send email" },
+        { status: 500 }
+      );
     }
 
     return Response.json(resendData);
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error("[send] unexpected error:", error);
+    return Response.json(
+      { error: error instanceof Error ? error.message : "Something went wrong" },
+      { status: 500 }
+    );
   }
 }
