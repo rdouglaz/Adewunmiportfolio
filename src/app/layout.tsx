@@ -25,7 +25,7 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  // pins every relative/OG url to the .dev origin so nothing canonicalises back to .site
+  // pins every relative/OG url to the canonical site origin
   metadataBase: new URL(config.site),
   alternates: { canonical: "./" },
   title: config.title,

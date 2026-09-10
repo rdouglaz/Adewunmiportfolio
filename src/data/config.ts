@@ -1,7 +1,7 @@
 const config = {
-  title: "Adewunmi Saliu | AI Product Builder",
+  title: "Adewunmi Editorial Lab | AI Product Builder",
   description: {
-    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products through product thinking, AI workflows, rapid prototyping, and execution.",
+    long: "I'm Adewunmi Saliu, an AI Product Builder and founder designing AI-native products — from LLM-powered knowledge systems to internal business platforms. I turn ideas into products through rapid prototyping, strategic thinking, and deep technical execution.",
     short:
       "Adewunmi Saliu — AI Product Builder. Building AI products people actually use.",
   },
@@ -19,6 +19,7 @@ const config = {
     "React",
     "Next.js",
     "AI-native products",
+    "Supabase",
     "knowledge systems",
   ],
   author: "Adewunmi Saliu",
@@ -27,6 +28,8 @@ const config = {
   // Contact inbox — the contact form sends to this address via Resend.
   email: "Adewunmi@podsystem.ng",
   // Canonical site URL — used for metadata, OG tags, sitemap and robots.
+  // (If adewunmi.podsystem.ng is also yours, point it at this deployment in
+  // Vercel so both domains serve the same site.)
   site: "https://adewunmilab.podsystem.ng",
 
   // for github stars button — left empty until you add your repo.
@@ -39,8 +42,7 @@ const config = {
   social: {
     twitter: "https://x.com/WatchingD_World",
     linkedin: "https://www.linkedin.com/in/adewunmisaliu/",
-    // TODO: replace with your real GitHub profile URL.
-    github: "https://github.com/your-username",
+    github: "https://github.com/rdouglaz/Adewunmi",
   },
 };
 export { config };
