@@ -26,8 +26,8 @@ const config = {
   location: "Lagos, Nigeria",
   // Contact inbox — the contact form sends to this address via Resend.
   email: "Adewunmi@podsystem.ng",
-  // TODO: replace with your real site URL once you have a domain.
-  site: "https://adewunmisaliu.dev",
+  // Canonical site URL — used for metadata, OG tags, sitemap and robots.
+  site: "https://adewunmilab.podsystem.ng",
 
   // for github stars button — left empty until you add your repo.
   githubUsername: "",
