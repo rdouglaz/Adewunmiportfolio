@@ -97,7 +97,7 @@ const releases: Release[] = [
     tagline: "Book Formatting",
     description:
       "AI-assisted studio for formatting books — structure, layout, and publish-ready output.",
-    license: "Commercial",
+    license: "Open source",
     version: "v1.0",
     tech: ["AI writing systems", "React", "Vercel"],
     releaseUrl: "",
