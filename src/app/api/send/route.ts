@@ -58,7 +58,6 @@ export async function POST(req: Request) {
       to: [config.email],
       replyTo: zodData.email,
       subject: `New portfolio inquiry from ${zodData.fullName}`,
-      previewText: zodData.message.slice(0, 120),
       react: EmailTemplate({
         fullName: zodData.fullName,
         email: zodData.email,
