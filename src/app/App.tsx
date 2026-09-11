@@ -3,6 +3,7 @@ import { Navigation } from '@/app/components/Navigation';
 import { Footer } from '@/app/components/Footer';
 import { Home } from '@/app/pages/Home';
 import { Projects } from '@/app/pages/Projects';
+import { Releases } from '@/app/pages/Releases';
 import { About } from '@/app/pages/About';
 import { Contact } from '@/app/pages/Contact';
 import { Admin } from '@/app/pages/Admin';
@@ -37,6 +38,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/releases" element={<Releases />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/feedback" element={<Feedback />} />

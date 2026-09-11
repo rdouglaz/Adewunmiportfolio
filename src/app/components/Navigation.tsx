@@ -34,6 +34,14 @@ export function Navigation() {
               Projects
             </Link>
             <Link 
+              to="/releases" 
+              className={`text-base hover:text-neutral-900 transition-colors ${
+                isActive('/releases') ? 'text-neutral-900 font-medium' : 'text-neutral-600'
+              }`}
+            >
+              Releases
+            </Link>
+            <Link 
               to="/about" 
               className={`text-base hover:text-neutral-900 transition-colors ${
                 isActive('/about') ? 'text-neutral-900 font-medium' : 'text-neutral-600'

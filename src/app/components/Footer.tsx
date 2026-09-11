@@ -53,6 +53,14 @@ export function Footer() {
                 </Link>
               </StaggerItem>
               <StaggerItem>
+                <Link 
+                  to="/releases"
+                  className="text-base text-neutral-600 hover:text-blue-600 transition-colors font-medium"
+                >
+                  Releases
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
                 <div className="pt-3 mt-3 border-t border-neutral-200">
                   <Link 
                     to="/admin"
