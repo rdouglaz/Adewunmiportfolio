@@ -220,15 +220,7 @@ export function Releases() {
                       <Download className="w-4 h-4" />
                       Latest Release
                     </BeamButton>
-                  ) : (
-                    <span
-                      title="Add releaseUrl in src/app/pages/Releases.tsx"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-neutral-400 border border-dashed border-neutral-300 rounded cursor-not-allowed"
-                    >
-                      <Download className="w-4 h-4" />
-                      Release coming soon
-                    </span>
-                  )}
+                  ) : null}
                   {release.repoUrl && (
                     <a
                       href={release.repoUrl}
