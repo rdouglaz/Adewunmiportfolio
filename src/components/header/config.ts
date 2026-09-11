@@ -37,6 +37,11 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/blogs.svg',
   },
   {
+    title: 'Releases',
+    href: '/releases',
+    thumbnail: '/assets/nav-link-previews/releases.svg',
+  },
+  {
     title: 'Contact',
     href: '/#contact',
     thumbnail: '/assets/nav-link-previews/contact.svg'
