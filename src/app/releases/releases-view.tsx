@@ -112,15 +112,7 @@ const ReleaseCard = ({
                     Latest Release
                   </span>
                 </Link>
-              ) : (
-                <span
-                  title="Add releaseUrl in src/data/releases.ts"
-                  className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-dashed border-border px-4 py-1.5 text-xs font-medium text-muted-foreground"
-                >
-                  <Download className="h-3.5 w-3.5" aria-hidden="true" />
-                  Release coming soon
-                </span>
-              )}
+              ) : null}
               {release.repoUrl && (
                 <Link
                   href={release.repoUrl}
