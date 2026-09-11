@@ -105,13 +105,18 @@ const releases: Release[] = [
     name: 'AI Book Formatter Studio',
     tag: 'Book Formatting',
     description:
-      'Upcoming studio for AI-assisted book formatting — release details coming soon.',
-    license: 'Upcoming',
-    version: 'TBA',
-    tech: [],
+      'AI-assisted studio for formatting books — structure, layout, and publish-ready output.',
+    license: 'Commercial',
+    version: 'v1.0',
+    tech: ['AI writing systems', 'React', 'Vercel'],
     releaseUrl: '',
     repoUrl: '',
-    links: [],
+    links: [
+      {
+        label: 'Open App',
+        href: 'https://ai-book-formatter-lime.vercel.app/',
+      },
+    ],
   },
   {
     id: 'local-ai-voice-studio',
