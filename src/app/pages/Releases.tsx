@@ -13,7 +13,7 @@ type Release = {
   name: string;
   tag: string;
   description: string;
-  license: 'Open source' | 'Commercial';
+  license: 'Open source' | 'Commercial' | 'Upcoming';
   version: string;
   tech: string[];
   // TODO: paste the GitHub release/tag URL when you cut a release,
@@ -86,6 +86,59 @@ const releases: Release[] = [
     repoUrl: 'https://github.com/rdouglaz/Nonfictionai',
     links: [{ label: 'Open App', href: 'https://nonfictionai.vercel.app/' }],
   },
+  {
+    id: 'clipforge-ai',
+    name: 'ClipForge AI',
+    tag: 'Local Video Clipping',
+    description:
+      'Local AI clipping app for Windows. Download the v1.0.0 installer below to get started.',
+    license: 'Open source',
+    version: 'v1.0.0',
+    tech: ['TypeScript', 'Windows'],
+    releaseUrl:
+      'https://github.com/rdouglaz/ClipForge-AI/releases/download/v1.0.0/ClippingAI-Setup-1.0.0.exe',
+    repoUrl: 'https://github.com/rdouglaz/ClipForge-AI',
+    links: [],
+  },
+  {
+    id: 'ai-book-formatter-studio',
+    name: 'AI Book Formatter Studio',
+    tag: 'Book Formatting',
+    description:
+      'Upcoming studio for AI-assisted book formatting — release details coming soon.',
+    license: 'Upcoming',
+    version: 'TBA',
+    tech: [],
+    releaseUrl: '',
+    repoUrl: '',
+    links: [],
+  },
+  {
+    id: 'local-ai-voice-studio',
+    name: 'Local AI Voice Studio',
+    tag: 'Voice Studio',
+    description:
+      'Upcoming studio for local AI voice work — release details coming soon.',
+    license: 'Upcoming',
+    version: 'TBA',
+    tech: [],
+    releaseUrl: '',
+    repoUrl: '',
+    links: [],
+  },
+  {
+    id: 'ai-video-editing-studio',
+    name: 'AI Video Editing Studio',
+    tag: 'Video Editing',
+    description:
+      'Upcoming studio for AI video editing — release details coming soon.',
+    license: 'Upcoming',
+    version: 'TBA',
+    tech: [],
+    releaseUrl: '',
+    repoUrl: '',
+    links: [],
+  },
 ];
 
 export function Releases() {
@@ -122,7 +175,9 @@ export function Releases() {
                     className={`text-xs font-medium px-3 py-1 rounded-full border ${
                       release.license === 'Open source'
                         ? 'border-blue-200 bg-blue-50 text-blue-700'
-                        : 'border-violet-200 bg-violet-50 text-violet-700'
+                        : release.license === 'Commercial'
+                          ? 'border-violet-200 bg-violet-50 text-violet-700'
+                          : 'border-neutral-200 bg-neutral-100 text-neutral-500'
                     }`}
                   >
                     {release.license}
