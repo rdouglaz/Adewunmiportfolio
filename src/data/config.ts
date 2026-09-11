@@ -42,7 +42,7 @@ const config = {
   social: {
     twitter: "https://x.com/WatchingD_World",
     linkedin: "https://www.linkedin.com/in/adewunmisaliu/",
-    github: "https://github.com/rdouglaz/Adewunmi",
+    github: "https://github.com/rdouglaz",
   },
 };
 export { config };

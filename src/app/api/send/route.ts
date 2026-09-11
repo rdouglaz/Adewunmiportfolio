@@ -56,12 +56,22 @@ export async function POST(req: Request) {
     const { data: resendData, error: resendError } = await resend.emails.send({
       from,
       to: [config.email],
-      subject: "Contact me from portfolio",
+      replyTo: zodData.email,
+      subject: `New portfolio inquiry from ${zodData.fullName}`,
+      previewText: zodData.message.slice(0, 120),
       react: EmailTemplate({
         fullName: zodData.fullName,
         email: zodData.email,
         message: zodData.message,
       }) as React.ReactElement,
+      text: [
+        `New portfolio inquiry from adewunmilab.podsystem.ng`,
+        ``,
+        `Name: ${zodData.fullName}`,
+        `Email: ${zodData.email}`,
+        ``,
+        zodData.message,
+      ].join("\n"),
     });
 
     if (resendError) {
