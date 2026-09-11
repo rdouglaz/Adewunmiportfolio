@@ -70,7 +70,9 @@ const ReleaseCard = ({
                   "inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium",
                   release.license === "Open source"
                     ? "border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                    : "border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400"
+                    : release.license === "Commercial"
+                      ? "border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400"
+                      : "border-border bg-secondary/60 text-muted-foreground"
                 )}
               >
                 {release.license}
