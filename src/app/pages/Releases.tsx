@@ -136,12 +136,13 @@ const releases: Release[] = [
     name: 'AI Video Editing Studio',
     tag: 'Video Editing',
     description:
-      'Upcoming studio for AI video editing — release details coming soon.',
+      'AI video editing studio — download the portable offline build below.',
     license: 'Upcoming',
     version: 'TBA',
-    tech: [],
-    releaseUrl: '',
-    repoUrl: '',
+    tech: ['TypeScript', 'Windows'],
+    releaseUrl:
+      'https://github.com/rdouglaz/ClipForge-AI/releases/download/new/DevotionalStudio-Portable-OFFLINE.zip',
+    repoUrl: 'https://github.com/rdouglaz/ClipForge-AI',
     links: [],
   },
 ];
