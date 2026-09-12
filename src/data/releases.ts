@@ -114,12 +114,13 @@ const releases: Release[] = [
     name: "Local AI Voice Studio",
     tagline: "Voice Studio",
     description:
-      "Upcoming studio for local AI voice work — release details coming soon.",
+      "Local AI voice studio — download the VoiceOver setup below.",
     license: "Upcoming",
-    version: "TBA",
-    tech: [],
-    releaseUrl: "",
-    repoUrl: "",
+    version: "v1.0",
+    tech: ["TypeScript", "Windows"],
+    releaseUrl:
+      "https://github.com/rdouglaz/ClipForge-AI/releases/download/v1.0/VoiceOver-Setup-3.0.0.exe",
+    repoUrl: "https://github.com/rdouglaz/ClipForge-AI",
     links: [],
   },
   {
