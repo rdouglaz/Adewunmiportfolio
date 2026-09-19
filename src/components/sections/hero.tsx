@@ -10,6 +10,7 @@ import SectionWrapper from "../ui/section-wrapper";
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
+import HeroPortrait from "./hero-portrait";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
@@ -128,7 +129,9 @@ const HeroSection = () => {
             </div>
           )}
         </div>
-        <div className="grid col-span-1"></div>
+        <div className="relative z-[2] col-span-1 flex items-center justify-center px-6 pb-24 pt-6 md:justify-end md:p-20 md:pl-8 lg:p-24 lg:pl-10 xl:p-28 xl:pl-12">
+          <HeroPortrait />
+        </div>
       </div>
       <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
         <ScrollDownIcon />
