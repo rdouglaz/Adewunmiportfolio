@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { Cpu, Sparkles } from "lucide-react";
+import { Cpu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePreloader } from "../preloader";
 import { BlurIn } from "../reveal-animations";
@@ -88,7 +88,7 @@ const HeroPortrait = () => {
           <div
             ref={frameRef}
             className={cn(
-              "relative aspect-[4/5] w-full overflow-hidden",
+              "relative aspect-[1080/1457] w-full overflow-hidden",
               "rounded-[1.8rem] border border-white/20",
               "bg-slate-900 shadow-[0_40px_80px_-20px_rgba(2,6,23,0.7),0_0_0_1px_rgba(255,255,255,0.06),0_0_60px_-10px_rgba(56,189,248,0.45)]",
               "dark:shadow-[0_40px_90px_-20px_rgba(0,0,0,0.9),0_0_70px_-12px_rgba(59,130,246,0.5)]",
@@ -166,31 +166,7 @@ const HeroPortrait = () => {
             </div>
           </div>
 
-          {/* Floating glass badges — forward in Z for parallax */}
-          <div
-            aria-hidden="true"
-            className="absolute -left-4 top-8 sm:-left-8"
-            style={{ transform: "translateZ(80px)" }}
-          >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white/70 px-3 py-2 shadow-xl backdrop-blur-xl dark:bg-slate-900/70"
-            >
-              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-sky-400 text-white">
-                <Sparkles size={15} />
-              </span>
-              <span>
-                <span className="block text-xs font-bold text-slate-900 dark:text-white">
-                  Ships weekly
-                </span>
-                <span className="block text-[11px] text-slate-500 dark:text-zinc-400">
-                  POD • Scribe • EduAtlas
-                </span>
-              </span>
-            </motion.div>
-          </div>
-
+          {/* Floating glass badge — forward in Z for parallax */}
           <div
             aria-hidden="true"
             className="absolute -right-3 bottom-28 sm:-right-6"
