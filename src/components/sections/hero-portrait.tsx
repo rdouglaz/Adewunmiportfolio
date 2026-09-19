@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState } from "react";
-import { motion } from "motion/react";
-import { Cpu } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { animate, motion, useMotionValue } from "motion/react";
+import { Cpu, Move } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePreloader } from "../preloader";
 import { BlurIn } from "../reveal-animations";
@@ -15,13 +15,35 @@ import { BlurIn } from "../reveal-animations";
  * fixed Spline keyboard background:
  *  - mouse-driven tilt + moving specular glare
  *  - gradient glow stage, orbit ring, film-grade color overlays
- *  - floating glass badges pulled forward with translateZ
+ *  - floating glass badge pulled forward with translateZ
+ *  - free drag on fine-pointer devices (touch keeps native scroll);
+ *    double-click snaps back to the staged position
  */
 const HeroPortrait = () => {
   const { isLoading } = usePreloader();
   const frameRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 20 });
   const [isHovering, setIsHovering] = useState(false);
+
+  // Free placement — desktop (fine pointer) only so touch scroll never fights
+  // the gesture. `drag` stays off on touch, leaving native scroll intact.
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const [dragEnabled, setDragEnabled] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine)");
+    const update = () => setDragEnabled(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const resetPosition = () => {
+    animate(x, 0, { type: "spring", stiffness: 260, damping: 26 });
+    animate(y, 0, { type: "spring", stiffness: 260, damping: 26 });
+  };
 
   const handleMove = (e: React.MouseEvent) => {
     const el = frameRef.current;
@@ -52,7 +74,11 @@ const HeroPortrait = () => {
     >
       {/* Stage with perspective */}
       <div
-        className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] [perspective:1400px]"
+        className={cn(
+          "relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] [perspective:1400px]",
+          dragEnabled && "cursor-grab active:cursor-grabbing"
+        )}
+        title={dragEnabled ? "Drag to reposition — double-click to reset" : undefined}
         onMouseMove={handleMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={resetTilt}
@@ -78,12 +104,20 @@ const HeroPortrait = () => {
           <span className="absolute -bottom-1.5 right-12 h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_3px_rgba(253,230,138,0.7)]" />
         </div>
 
-        {/* Idle float */}
+        {/* Drag layer (desktop only) > Idle float */}
         <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          drag={dragEnabled}
+          dragMomentum={false}
+          style={{ x, y }}
+          onDragStart={() => setHasDragged(true)}
+          onDoubleClick={resetPosition}
           className="relative"
         >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
           {/* Tilting 3D card */}
           <div
             ref={frameRef}
@@ -195,6 +229,21 @@ const HeroPortrait = () => {
               </span>
             </motion.div>
           </div>
+
+          {/* Drag hint — desktop only, hides after first drag */}
+          {dragEnabled && !hasDragged && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2, duration: 0.6 }}
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-11 left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-slate-900/70 px-3 py-1.5 text-[11px] font-medium text-zinc-300 backdrop-blur-xl"
+            >
+              <Move size={12} className="text-sky-300" />
+              Drag to move · double-click to reset
+            </motion.div>
+          )}
+          </motion.div>
         </motion.div>
       </div>
     </BlurIn>
